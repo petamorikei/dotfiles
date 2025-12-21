@@ -1,0 +1,14 @@
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }
+
+[[language]]
+name = "markdown"
+language-servers = ["marksman", "harper-ls"]
+
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+
+[language-server.harper-ls]
+args = ["--stdio"]
+command = "harper-ls"

@@ -1,0 +1,57 @@
+{
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+{{- if eq .chezmoi.os "darwin" }}
+      "Skill(vp-reporter)",
+      "Bash(vp:*)",
+{{- end }}
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "hooks": {
+{{- if eq .chezmoi.os "darwin" }}
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "vp \"クロードからの通知があるわよ！\" &"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "vp \"作業が完了したわよ！\" &"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "vp \"コンテキストを圧縮するわよ！\" &"
+          }
+        ]
+      }
+    ]
+{{- end }}
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bun x ccusage statusline"
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-code-plugins": true
+  },
+  "alwaysThinkingEnabled": true
+}

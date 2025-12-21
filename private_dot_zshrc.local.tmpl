@@ -1,0 +1,5 @@
+# Local configurations (managed by chezmoi with Bitwarden)
+# This file contains secrets and machine-specific settings
+
+# Discord webhook URL for notifications
+DISCORD_WEBHOOK_URL="{{ (bitwardenFields "item" "dotfiles-secrets").DISCORD_WEBHOOK_URL.value }}"

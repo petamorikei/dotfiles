@@ -1,0 +1,134 @@
+[mgr]
+ratio = [1, 4, 3]
+sort_by = "natural"
+sort_sensitive = true
+sort_reverse = false
+sort_dir_first = true
+linemode = "size"
+show_hidden = true
+show_symlink = true
+
+[preview]
+tab_size = 2
+max_width = 3840
+max_height = 3840
+cache_dir = ""
+ueberzug_scale = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[opener]
+edit = [
+  { run = '$EDITOR "$@"', block = true, desc = "Edit", for = "unix" },
+  { run = 'code "$@"', orphan = true, desc = "Open in VS Code", for = "unix" },
+  { run = 'code "%*"', orphan = true, desc = "Open in VS Code", for = "windows" },
+]
+view_source = [
+  { run = 'bat "$@"', block = true, desc = "View Source", for = "unix" },
+]
+open = [
+  { run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "linux" },
+  { run = 'open "$@"', orphan = true, desc = "Open", for = "macos" },
+  { run = 'start "%1"', orphan = true, desc = "Open", for = "windows" },
+]
+reveal = [
+  { run = 'open -R "$1"', orphan = true, desc = "Reveal", for = "macos" },
+  { run = 'xdg-open "$(dirname "$1")"', orphan = true, desc = "Reveal", for = "linux" },
+  { run = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
+]
+view_exif = [
+  { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "View EXIF", for = "unix" },
+]
+extract = [
+  { run = 'unar "$1"', desc = "Extract here", for = "unix" },
+  { run = 'unar "%1"', desc = "Extract here", for = "windows" },
+]
+view_image = [
+  { run = '''timg --title --center --upscale "$@"; echo "Press enter to exit"; read''', block = true, desc = "View in Terminal", for = "unix" },
+]
+play = [
+  { run = 'mpv "$@"', orphan = true, desc = "Play", for = "unix" },
+  { run = 'mpv "%1"', orphan = true, desc = "Play", for = "windows" },
+  { run = '''mpv --vo=tct "$1"''', block = true, desc = "Play inline", for = "unix" },
+  { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
+]
+view_pdf = [
+  { run = 'tdf "$@"', block = true, desc = "View in Terminal", for = "unix" },
+]
+view_md = [
+  { run = 'treemd "$@"', block = true, desc = "View in Terminal", for = "unix" },
+]
+
+[open]
+rules = [
+  # Directory
+  { name = "*/", use = [
+    "edit",
+    "open",
+    "reveal",
+  ] },
+
+  # Specific extensions
+  { name = "*.md", use = [
+    "view_md",
+  ] },
+  { name = "*.json", use = [
+    "edit",
+    "view_source",
+    "reveal",
+  ] },
+  { name = "*.pdf", use = [
+    "view_pdf",
+  ] },
+
+  # MIME wildcards
+  { mime = "text/*", use = [
+    "open",
+    "edit",
+    "view_source",
+    "reveal",
+  ] },
+  { mime = "image/*", use = [
+    "open",
+    "view_image",
+    "view_exif",
+    "reveal",
+  ] },
+  { mime = "video/*", use = [
+    "open",
+    "play",
+    "reveal",
+  ] },
+  { mime = "audio/*", use = [
+    "open",
+    "play",
+    "reveal",
+  ] },
+
+  # Specific MIME types
+  { mime = "inode/x-empty", use = [
+    "edit",
+    "reveal",
+  ] },
+  { mime = "application/{zip,gzip,x-tar,x-bzip,x-bzip2,x-7z-compressed,x-rar,x-xz,zstd,x-lzma,x-lz4}", use = [
+    "extract",
+    "reveal",
+  ] },
+
+  # Fallback
+  { mime = "*", use = [
+    "open",
+    "reveal",
+  ] },
+]
+
+[tasks]
+micro_workers = 5
+macro_workers = 10
+bizarre_retry = 5
+image_bound = [32768, 32768]
+
+[plugins]
+preload = []
+
+[log]
+enabled = false

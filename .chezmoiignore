@@ -1,0 +1,17 @@
+# Files to ignore when applying to home directory
+CLAUDE.md
+README.md
+
+# macOS only applications
+{{ if ne .chezmoi.os "darwin" }}
+.config/karabiner
+.config/vp
+{{ end }}
+
+# Docker environment: exclude files requiring Bitwarden or containing personal info
+{{ if env "DOCKER_ENV" }}
+.ssh/config
+.gitconfig
+.gitconfig.work
+.zshrc.local
+{{ end }}

@@ -1,0 +1,14 @@
+default_preset = "karin-custom"
+
+[[presets]]
+name = "karin-custom"
+narrator = "夏色花梨"
+emotions = [
+    { name = "hightension", value = 10 },
+    { name = "buchigire", value = 0 },
+    { name = "nageki", value = 0 },
+    { name = "sagesumi", value = 0 },
+    { name = "sasayaki", value = 20 },
+]
+pitch = 25
+speed = 120

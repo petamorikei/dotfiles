@@ -1,0 +1,207 @@
+############################
+# Powerlevel10k Instant Prompt
+############################
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+############################
+# Sources
+############################
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Source local configurations (secrets, machine-specific settings)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+############################
+# Zsh Options
+############################
+# Enable auto complete
+autoload -Uz compinit && compinit
+
+# Ignore case on auto complete
+zstyle ":completion:*" matcher-list "m:{[:lower:][:upper:]}={[:upper:][:lower:]}"
+
+# Highlight selected candidate
+zstyle ":completion:*:default" menu select=1
+
+# Show candidates by groups
+zstyle ":completion:*" format "%B%F{blue}%d%f%b"
+zstyle ":completion:*" group-name ""
+
+# Hide duplicates in history
+setopt hist_ignore_all_dups
+
+# Share history in all sessions
+setopt share_history
+
+# Entries of history
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# Enable cd without "cd
+setopt auto_cd
+
+# Enable auto push to directory stack
+DIRSTACKSIZE=32
+setopt autopushd
+setopt pushd_ignore_dups
+zstyle ":completion:*:cd:*" ignore-parents parent pwd
+
+############################
+# Environment Variables
+############################
+{{- if eq .chezmoi.os "linux" }}
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Override default Powerlevel10k configuration
+{{- if eq .chezmoi.osRelease.id "ubuntu" }}
+export POWERLEVEL9K_OS_ICON_FOREGROUND="#e95420"
+{{- else if eq .chezmoi.osRelease.id "manjaro" }}
+export POWERLEVEL9K_OS_ICON_FOREGROUND="#35bfa4"
+{{- end }}
+{{- end }}
+
+export EDITOR=hx
+
+############################
+# Aliases
+############################
+{{- if eq .chezmoi.os "darwin" }}
+alias ls="ls -G"
+alias bi="brew install"
+alias bu="brew uninstall"
+alias bs="brew search"
+alias mi="mas install"
+alias uga="brew upgrade; mas upgrade"
+alias ugag="brew upgrade --greedy; mas upgrade"
+alias rlp="defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock"
+alias ql="qlmanage -p \"$@\" >& /dev/null"
+alias timg="timg --title --center --upscale --grid=6 --frames=1"
+{{- else if eq .chezmoi.os "linux" }}
+alias ls="ls --color=auto"
+{{-   if eq .chezmoi.osRelease.id "ubuntu" }}
+# Desktop environment aliases (defined only if commands exist)
+command -v xdg-open &>/dev/null && alias open="xdg-open"
+command -v apt-fast &>/dev/null && alias af="apt-fast"
+alias fd="fdfind"
+alias uga="sudo apt-fast -y update && sudo apt-fast -y upgrade; sudo snap refresh"
+{{-   else if eq .chezmoi.osRelease.id "manjaro" }}
+alias uga="sudo pacman -Syu"
+alias hx="helix"
+{{-   end }}
+{{- end }}
+alias tree="tree -NC --dirsfirst"
+alias play="mpv --vo=tct"
+
+############################
+# Functions
+############################
+# Format an integer as time
+function format_time {
+  local total_seconds=$1
+  local days=$((total_seconds / 86400))
+  local hours=$(( (total_seconds % 86400) / 3600 ))
+  local minutes=$(( (total_seconds % 3600) / 60 ))
+  local seconds=$(( total_seconds % 60 ))
+
+  if (( days > 0 )); then
+    printf "%dd %dh %dm %ds\n" $days $hours $minutes $seconds
+  elif (( hours > 0 )); then
+    printf "%dh %dm %ds\n" $hours $minutes $seconds
+  elif (( minutes > 0 )); then
+    printf "%dm %ds\n" $minutes $seconds
+  else
+    printf "%ds\n" $seconds
+  fi
+}
+
+# Notify long tasks
+# Send notifications when commands take longer than threshold
+prev_command=""
+notify_threshold=10           # Show desktop notification after 10 seconds
+longer_notify_threshold=600   # Send Discord notification after 10 minutes
+function notify_long_task() {
+    if [ $TTYIDLE -ge $longer_notify_threshold ]; then
+        setopt LOCAL_OPTIONS NO_MONITOR; discord-noti &;
+    fi
+    if [ $TTYIDLE -ge $notify_threshold ]; then
+        noti --title "Done job ($(format_time TTYIDLE))" --message "${prev_command}";
+    fi
+}
+
+# Discord notifier
+function discord-noti() {
+  curl --json "{\"host\":\"$HOST\",\"command\":$(jq -n --arg cmd "$prev_command" '$cmd'),\"duration\":$TTYIDLE, \"status\": $?}" "$DISCORD_WEBHOOK_URL"
+}
+
+# preexec hook
+preexec() { prev_command="$1"; }
+
+# precmd hook
+precmd() { notify_long_task; }
+
+# cd with peco
+function cdp() { cd "$(ls | peco)" }
+
+# ls with peco
+function lsp() { ls -a | peco }
+
+# Extend open command
+{{- if eq .chezmoi.os "darwin" }}
+function op() { if [ -z "$1" ]; then open .; else open "$@"; fi }
+{{- else }}
+function op() { if [ -z "$1" ]; then xdg-open .; else xdg-open "$@"; fi }
+{{- end }}
+{{- if eq .chezmoi.os "darwin" }}
+
+# Open in iTerm
+function iterm() { open -a iTerm.app "$1"; }
+{{- end }}
+
+############################
+# Plugins
+############################
+# Source sheldon
+eval "$(sheldon source)"
+
+############################
+# Development Tools
+############################
+# Deno
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# mise
+{{- if eq .chezmoi.os "darwin" }}
+eval "$(${HOMEBREW_PREFIX}/bin/mise activate zsh)"
+{{- else }}
+eval "$(~/.local/bin/mise activate zsh)"
+{{- end }}
+
+# pnpm
+{{- if eq .chezmoi.os "darwin" }}
+export PNPM_HOME="$HOME/Library/pnpm"
+{{- else }}
+export PNPM_HOME="$HOME/.local/share/pnpm"
+{{- end }}
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# Rust
+export CARGO_HOME="$HOME/.cargo"
+export PATH="$CARGO_HOME/bin:$PATH"
+
+# atuin
+. "$HOME/.atuin/bin/env"
+
+# Disable up arrow binding for atuin
+eval "$(atuin init zsh --disable-up-arrow)"

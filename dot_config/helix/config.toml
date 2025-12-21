@@ -1,0 +1,12 @@
+theme = "ayu_mirage"
+
+[editor]
+scrolloff = 38
+line-number = "relative"
+cursorline = true
+color-modes = true
+text-width = 120
+true-color = true
+
+[editor.indent-guides]
+render = true

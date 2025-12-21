@@ -1,0 +1,12 @@
+[user]
+	name = {{ (bitwardenFields "item" "dotfiles-secrets").GIT_NAME.value }}
+	email = {{ (bitwardenFields "item" "dotfiles-secrets").GIT_EMAIL.value }}
+[credential]
+{{- if eq .chezmoi.os "darwin" }}
+	helper = osxkeychain
+{{- else }}
+	helper = store
+{{- end }}
+[core]
+	ignorecase = false
+{{ (bitwarden "item" "git-work-config").notes }}
