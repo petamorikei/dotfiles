@@ -131,7 +131,7 @@ function notify_long_task() {
     if [ $TTYIDLE -ge $longer_notify_threshold ]; then
         setopt LOCAL_OPTIONS NO_MONITOR; discord-noti &;
     fi
-    if [ $TTYIDLE -ge $notify_threshold ]; then
+    if command -v noti &>/dev/null && [ $TTYIDLE -ge $notify_threshold ]; then
         noti --title "Done job ($(format_time TTYIDLE))" --message "${prev_command}";
     fi
 }
