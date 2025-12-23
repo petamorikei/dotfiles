@@ -8,8 +8,8 @@ README.md
 .config/vp
 {{ end }}
 
-# Docker environment: exclude files requiring Bitwarden or containing personal info
-{{ if env "DOCKER_ENV" }}
+# Skip secret files (Bitwarden-dependent files)
+{{ if env "SKIP_SECRETS" }}
 .ssh/config
 .gitconfig
 .gitconfig.work
