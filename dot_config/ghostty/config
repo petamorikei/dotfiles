@@ -14,4 +14,7 @@ quick-terminal-screen = mouse
 confirm-close-surface = false
 window-inherit-working-directory = false
 
+background-opacity = 0.9
+background-blur = true
+
 keybind = global:alt+space=toggle_quick_terminal
