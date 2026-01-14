@@ -61,30 +61,36 @@ view_md = [
 [open]
 rules = [
   # Directory
-  { name = "*/", use = [
+  { url = "*/", use = [
     "edit",
     "open",
     "reveal",
   ] },
 
   # Specific extensions
-  { name = "*.md", use = [
+  { url = "*.md", use = [
     "view_md",
-  ] },
-  { name = "*.json", use = [
     "edit",
-    "view_source",
+    "open",
     "reveal",
   ] },
-  { name = "*.pdf", use = [
+  { url = "*.json", use = [
+    "edit",
+    "view_source",
+    "open",
+    "reveal",
+  ] },
+  { url = "*.pdf", use = [
     "view_pdf",
+    "open",
+    "reveal",
   ] },
 
   # MIME wildcards
   { mime = "text/*", use = [
-    "open",
     "edit",
     "view_source",
+    "open",
     "reveal",
   ] },
   { mime = "image/*", use = [
@@ -115,7 +121,7 @@ rules = [
   ] },
 
   # Fallback
-  { mime = "*", use = [
+  { url = "*", use = [
     "open",
     "reveal",
   ] },
