@@ -94,19 +94,19 @@ rules = [
     "reveal",
   ] },
   { mime = "image/*", use = [
-    "open",
     "view_image",
+    "open",
     "view_exif",
     "reveal",
   ] },
   { mime = "video/*", use = [
-    "open",
     "play",
+    "open",
     "reveal",
   ] },
   { mime = "audio/*", use = [
-    "open",
     "play",
+    "open",
     "reveal",
   ] },
 
