@@ -9,8 +9,14 @@
 {{- end }}
       "WebSearch"
     ],
-    "deny": [],
+    "deny": [
+      "Bash(npm:*)",
+      "Bash(npx:*)"
+    ],
     "ask": []
+  },
+   "env": {
+    "CLAUDE_CODE_HIDE_ACCOUNT_INFO": "1"
   },
   "hooks": {
 {{- if eq .chezmoi.os "darwin" }}
@@ -58,5 +64,5 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
-  "language": "日本語"
+  "language": "Japanese"
 }
