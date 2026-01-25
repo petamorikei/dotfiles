@@ -15,9 +15,14 @@
     ],
     "ask": []
   },
-   "env": {
+  "env": {
     "CLAUDE_CODE_HIDE_ACCOUNT_INFO": "1"
   },
+{{- if eq .chezmoi.os "darwin" }}
+  "sandbox": {
+    "excludedCommands": ["vp"]
+  },
+{{- end }}
   "hooks": {
 {{- if eq .chezmoi.os "darwin" }}
     "Notification": [
