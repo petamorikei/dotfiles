@@ -41,7 +41,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "vp \"作業が完了したわよ！\"",
+            "command": "jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
             "async": true
           }
         ]
