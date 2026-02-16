@@ -43,22 +43,12 @@
         }
       },
       {
-        "id": "6a83b5da-4581-42d5-ae85-f4d4e4046cb2",
-        "type": "context-length",
-        "backgroundColor": "bgBrightYellow"
-      },
-      {
         "id": "4f0792cb-6ada-4055-82cc-218a12502d1d",
         "type": "context-percentage",
         "backgroundColor": "bgCyan",
         "metadata": {
           "inverse": "false"
         }
-      },
-      {
-        "id": "9c092229-90fb-449d-9df5-7dc01f8be56d",
-        "type": "tokens-total",
-        "backgroundColor": "bgBrightCyan"
       },
       {
         "id": "17f8b360-93cb-4468-acb4-3c669ebcded7",
