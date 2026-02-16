@@ -1,29 +1,28 @@
 {
-  "defaultMode": "acceptEdits",
-  "includeCoAuthoredBy": false,
   "cleanupPeriodDays": 99999,
+  "env": {
+    "IS_DEMO": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
 {{- if eq .chezmoi.os "darwin" }}
       "Skill(vp-reporter)",
-      "Bash(vp:*)",
+      "Bash(vp *)",
+      "Bash(vp * &)",
 {{- end }}
-      "WebSearch"
+      "WebSearch",
+      "WebFetch"
     ],
     "deny": [
-      "Bash(npm:*)",
-      "Bash(npx:*)"
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(python3 *)"
     ],
-    "ask": []
+    "ask": [],
+    "defaultMode": "acceptEdits"
   },
-  "env": {
-    "IS_DEMO": "1"
-  },
-{{- if eq .chezmoi.os "darwin" }}
-  "sandbox": {
-    "excludedCommands": ["vp"]
-  },
-{{- end }}
   "hooks": {
 {{- if eq .chezmoi.os "darwin" }}
     "Notification": [
@@ -42,7 +41,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
+            "command": "[ \"$CLAUDECODE\" = \"1\" ] && exit 0; INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
             "async": true
           }
         ]
@@ -70,8 +69,16 @@
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "language": "Japanese"
+  "language": "Japanese",
+{{- if eq .chezmoi.os "darwin" }}
+  "sandbox": {
+    "excludedCommands": [
+      "vp"
+    ]
+  },
+{{- end }}
+  "alwaysThinkingEnabled": true
 }
