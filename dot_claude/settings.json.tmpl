@@ -2,7 +2,9 @@
   "cleanupPeriodDays": 99999,
   "env": {
     "IS_DEMO": "1",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_NO_FLICKER": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -24,6 +26,7 @@
     "ask": [],
     "defaultMode": "acceptEdits"
   },
+  "model": "opus[1m]",
   "hooks": {
 {{- if eq .chezmoi.os "darwin" }}
     "Notification": [
@@ -69,9 +72,9 @@
   },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
 {{- if eq .chezmoi.os "darwin" }}
