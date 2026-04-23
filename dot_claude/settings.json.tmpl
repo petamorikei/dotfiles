@@ -4,7 +4,9 @@
     "IS_DEMO": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_EFFORT_LEVEL": "max",
-    "CLAUDE_CODE_NO_FLICKER": "1"
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -13,6 +15,7 @@
       "Skill(vp-reporter)",
       "Bash(vp *)",
 {{- end }}
+      "Bash(codex *)",
       "WebSearch",
       "WebFetch"
     ],
@@ -24,7 +27,7 @@
       "Bash(python3 *)"
     ],
     "ask": [],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
@@ -84,5 +87,7 @@
     ]
   },
 {{- end }}
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "xhigh",
+  "skipAutoPermissionPrompt": true
 }

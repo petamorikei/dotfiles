@@ -7,9 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "features": {
-    "edit_prediction_provider": "copilot",
-  },
+  "buffer_font_weight": 400.0,
   "git": {
     "blame": {
       "show_avatar": true,
@@ -20,11 +18,7 @@
       "show_commit_summary": false,
     },
   },
-  "agent_servers": {
-    "claude": {
-      "default_mode": "acceptEdits",
-    },
-  },
+  "agent_servers": {},
   "agent": {
     "default_model": {
       "provider": "copilot_chat",
@@ -32,7 +26,11 @@
     },
     "model_parameters": [],
   },
-  "icon_theme": "VSCode Icons for Zed (Dark Official Icons)",
+  "icon_theme": {
+    "mode": "light",
+    "light": "VSCode Icons for Zed (Dark Official Icons)",
+    "dark": "VSCode Icons for Zed (Dark Official Icons)"
+  },
   "terminal": {
     "dock": "right",
   },
@@ -104,11 +102,11 @@
     "diagnostics": false,
     "metrics": false,
   },
-  "buffer_font_size": 14.0,
+  "buffer_font_size": 12.0,
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Ayu Mirage",
-    "dark": "One Dark",
+    "dark": "Ayu Mirage",
   },
   "lsp": {
     "vtsls": {
