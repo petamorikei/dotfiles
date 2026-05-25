@@ -7,6 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "soft_wrap": "editor_width",
+  "cli_default_open_behavior": "new_window",
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "git_panel": {
+    "dock": "left",
+  },
+  "proxy": "",
   "buffer_font_weight": 400.0,
   "git": {
     "blame": {
@@ -18,8 +30,16 @@
       "show_commit_summary": false,
     },
   },
-  "agent_servers": {},
+  "agent_servers": {
+    "codex-acp": {
+      "type": "registry",
+    },
+    "claude-acp": {
+      "type": "registry",
+    },
+  },
   "agent": {
+    "dock": "right",
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-5.2",
@@ -29,7 +49,7 @@
   "icon_theme": {
     "mode": "light",
     "light": "VSCode Icons for Zed (Dark Official Icons)",
-    "dark": "VSCode Icons for Zed (Dark Official Icons)"
+    "dark": "VSCode Icons for Zed (Dark Official Icons)",
   },
   "terminal": {
     "dock": "right",
@@ -45,12 +65,15 @@
     "show_menus": false,
     "show_user_picture": true,
     "show_branch_name": true,
-    "show_branch_icon": false,
   },
   "status_bar": {
     "cursor_position_button": true,
   },
   "project_panel": {
+    "dock": "left",
+    "hide_gitignore": false,
+    "hide_root": false,
+    "hide_hidden": false,
     "entry_spacing": "standard",
     "button": true,
   },
@@ -116,6 +139,27 @@
             "maxInlayHintLength": 15,
           },
         },
+      },
+    },
+    "tinymist": {
+      "initialization_options": {
+        // Enable background preview
+        // Server will be running on 127.0.0.1:23635
+        "preview": {
+          "background": {
+            "enabled": true,
+          },
+        },
+      },
+
+      "settings": {
+        // Compile on save
+        // This will compile a PDF for the `main.typ` file in the project root.
+        // "exportPdf": "onSave",
+        // "outputPath": "$root/$name",
+
+        // Enable formatter
+        "formatterMode": "typstyle",
       },
     },
   },
