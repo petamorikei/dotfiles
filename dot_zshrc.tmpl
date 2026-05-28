@@ -90,7 +90,6 @@ alias ls="ls --color=auto"
 # Desktop environment aliases (defined only if commands exist)
 command -v xdg-open &>/dev/null && alias open="xdg-open"
 command -v apt-fast &>/dev/null && alias af="apt-fast"
-alias fd="fdfind"
 alias uga="sudo apt-fast -y update && sudo apt-fast -y upgrade; sudo snap refresh"
 {{-   else if eq .chezmoi.osRelease.id "manjaro" }}
 alias uga="sudo pacman -Syu"
