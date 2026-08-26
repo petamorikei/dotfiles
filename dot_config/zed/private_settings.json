@@ -41,8 +41,10 @@
   "agent": {
     "dock": "right",
     "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5.2",
+      "model": "gpt-5.3-codex",
     },
     "model_parameters": [],
   },

@@ -1,6 +1,7 @@
 # Files to ignore when applying to home directory
 CLAUDE.md
 README.md
+AGENTS.md
 
 # macOS only applications
 {{ if ne .chezmoi.os "darwin" }}
