@@ -2,7 +2,7 @@ default_preset = "karin-custom"
 
 [[presets]]
 name = "karin-custom"
-narrator = "夏色花梨"
+narrator = "Natsuki Karin"
 emotions = [
     { name = "hightension", value = 10 },
     { name = "buchigire", value = 0 },
