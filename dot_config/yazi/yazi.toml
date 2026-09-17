@@ -1,3 +1,5 @@
+#:schema https://yazi-rs.github.io/schemas/yazi.json
+
 [mgr]
 ratio = [1, 4, 3]
 sort_by = "natural"
@@ -18,44 +20,48 @@ ueberzug_offset = [0, 0, 0, 0]
 
 [opener]
 edit = [
-  { run = '$EDITOR "$@"', block = true, desc = "Edit", for = "unix" },
-  { run = 'code "$@"', orphan = true, desc = "Open in VS Code", for = "unix" },
-  { run = 'code "%*"', orphan = true, desc = "Open in VS Code", for = "windows" },
+  { run = '${EDITOR:-vi} %s', block = true, desc = "Edit", for = "unix" },
+  { run = 'code %s', orphan = true, desc = "Open in VS Code", for = "unix" },
+  { run = 'code %s', orphan = true, desc = "Open in VS Code", for = "windows" },
 ]
 view_source = [
-  { run = 'bat "$@"', block = true, desc = "View Source", for = "unix" },
+  { run = 'bat %s', block = true, desc = "View Source", for = "unix" },
 ]
 open = [
-  { run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "linux" },
-  { run = 'open "$@"', orphan = true, desc = "Open", for = "macos" },
-  { run = 'start "%1"', orphan = true, desc = "Open", for = "windows" },
+  { run = 'xdg-open %s1', orphan = true, desc = "Open", for = "linux" },
+  { run = 'open %s', orphan = true, desc = "Open", for = "macos" },
+  { run = 'start "" %s1', orphan = true, desc = "Open", for = "windows" },
 ]
 reveal = [
-  { run = 'open -R "$1"', orphan = true, desc = "Reveal", for = "macos" },
-  { run = 'xdg-open "$(dirname "$1")"', orphan = true, desc = "Reveal", for = "linux" },
-  { run = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
+  { run = 'open -R %s1', orphan = true, desc = "Reveal", for = "macos" },
+  { run = 'xdg-open %d1', orphan = true, desc = "Reveal", for = "linux" },
+  { run = 'explorer /select,%s1', orphan = true, desc = "Reveal", for = "windows" },
 ]
 view_exif = [
-  { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "View EXIF", for = "unix" },
+  { run = '''exiftool %s1; echo "Press enter to exit"; read''', block = true, desc = "View EXIF", for = "unix" },
 ]
 extract = [
-  { run = 'unar "$1"', desc = "Extract here", for = "unix" },
-  { run = 'unar "%1"', desc = "Extract here", for = "windows" },
+  { run = 'unar %s1', desc = "Extract here", for = "unix" },
+  { run = 'unar %s1', desc = "Extract here", for = "windows" },
+]
+trash = [
+  { run = "ya pub trash-restore --list %S", desc = "Restore selected files" },
+  { run = "ya pub trash-empty --list %S", desc = "Empty trash bin" },
 ]
 view_image = [
-  { run = '''timg --title --center --upscale "$@"; echo "Press enter to exit"; read''', block = true, desc = "View in Terminal", for = "unix" },
+  { run = '''timg --title --center --upscale %s; echo "Press enter to exit"; read''', block = true, desc = "View in Terminal", for = "unix" },
 ]
 play = [
-  { run = 'mpv "$@"', orphan = true, desc = "Play", for = "unix" },
-  { run = 'mpv "%1"', orphan = true, desc = "Play", for = "windows" },
-  { run = '''mpv --vo=tct "$1"''', block = true, desc = "Play inline", for = "unix" },
-  { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
+  { run = 'mpv %s', orphan = true, desc = "Play", for = "unix" },
+  { run = 'mpv %s1', orphan = true, desc = "Play", for = "windows" },
+  { run = '''mpv --vo=tct %s1''', block = true, desc = "Play inline", for = "unix" },
+  { run = '''mediainfo %s1; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
 ]
 view_pdf = [
-  { run = 'tdf "$@"', block = true, desc = "View in Terminal", for = "unix" },
+  { run = 'tdf %s', block = true, desc = "View in Terminal", for = "unix" },
 ]
 view_md = [
-  { run = 'treemd "$@"', block = true, desc = "View in Terminal", for = "unix" },
+  { run = 'treemd %s', block = true, desc = "View in Terminal", for = "unix" },
 ]
 
 [open]
@@ -111,13 +117,19 @@ rules = [
   ] },
 
   # Specific MIME types
-  { mime = "inode/x-empty", use = [
+  { mime = "inode/empty", use = [
     "edit",
     "reveal",
   ] },
-  { mime = "application/{zip,gzip,x-tar,x-bzip,x-bzip2,x-7z-compressed,x-rar,x-xz,zstd,x-lzma,x-lz4}", use = [
+  { mime = "application/{zip,gzip,tar,bzip,bzip2,7z-compressed,rar,xz,zstd,lzma,lz4}", use = [
     "extract",
     "reveal",
+  ] },
+
+  # Trash
+  { mime = "trash/**", use = [
+    "open",
+    "trash",
   ] },
 
   # Fallback
@@ -128,13 +140,5 @@ rules = [
 ]
 
 [tasks]
-micro_workers = 5
-macro_workers = 10
 bizarre_retry = 5
 image_bound = [32768, 32768]
-
-[plugins]
-preload = []
-
-[log]
-enabled = false
