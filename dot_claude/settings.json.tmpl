@@ -35,7 +35,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "vp \"クロードからの通知があるわよ！\"",
+            "command": "vp --bg \"クロードからの通知があるわよ！\"",
             "async": true
           }
         ]
@@ -78,7 +78,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "vp \"コンテキストを圧縮するわよ！\"",
+            "command": "vp --bg \"コンテキストを圧縮するわよ！\"",
             "async": true
           }
         ]
@@ -121,7 +121,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
+            "command": "INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp --bg \"作業が完了したわよ！\"",
             "async": true
           }
         ]
