@@ -41,10 +41,10 @@
   "agent": {
     "dock": "right",
     "default_model": {
-      "effort": "high",
+      "effort": "medium",
       "enable_thinking": true,
-      "provider": "copilot_chat",
-      "model": "gpt-5.3-codex",
+      "provider": "openai-subscribed",
+      "model": "gpt-6-astra",
     },
     "model_parameters": [],
   },
