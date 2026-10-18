@@ -1,15 +1,11 @@
 {
   "cleanupPeriodDays": 99999,
   "env": {
-    "CLAUDE_AFK_TIMEOUT_MS": "2147483647",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
-    "CLAUDE_CODE_EFFORT_LEVEL": "ultracode",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_NO_FLICKER": "1",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "best"
+    "CLAUDE_CODE_NO_FLICKER": "1"
   },
-  "includeCoAuthoredBy": false,
+  "attribution": false,
   "permissions": {
     "allow": [
 {{- if eq .chezmoi.os "darwin" }}
@@ -48,7 +44,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -58,7 +55,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -68,7 +66,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -90,7 +89,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -110,7 +110,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -120,7 +121,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ \"$CLAUDECODE\" = \"1\" ] && exit 0; INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
+            "command": "INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
             "async": true
           }
         ]
@@ -129,7 +130,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -139,7 +141,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -149,7 +152,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -159,7 +163,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
           }
         ]
       }
@@ -181,14 +186,6 @@
     "typescript-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
-{{- if eq .chezmoi.os "darwin" }}
-  "sandbox": {
-    "excludedCommands": [
-      "vp"
-    ]
-  },
-{{- end }}
-  "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5-5": {
