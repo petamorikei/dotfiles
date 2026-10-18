@@ -1,13 +1,13 @@
 {
   "cleanupPeriodDays": 99999,
   "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_EFFORT_LEVEL": "ultracode",
-    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_AFK_TIMEOUT_MS": "2147483647",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "best",
-    "CLAUDE_AFK_TIMEOUT_MS": "2147483647"
+    "CLAUDE_CODE_EFFORT_LEVEL": "ultracode",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "best"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -32,11 +32,6 @@
     "defaultMode": "auto"
   },
   "model": "opus",
-  "modelSettings": {
-    "claude-opus-5-5": {
-      "effortLevel": "high"
-    }
-  },
   "hooks": {
 {{- if eq .chezmoi.os "darwin" }}
     "Notification": [
@@ -58,16 +53,17 @@
         ]
       }
     ],
-    "Stop": [
+    "PermissionRequest": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "[ \"$CLAUDECODE\" = \"1\" ] && exit 0; INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
-            "async": true
+            "command": "\"$HOME/.config/iterm2/cc-status\""
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
         "hooks": [
           {
@@ -89,16 +85,6 @@
         ]
       }
     ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\""
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "hooks": [
@@ -109,7 +95,7 @@
         ]
       }
     ],
-    "PostToolUse": [
+    "SessionEnd": [
       {
         "hooks": [
           {
@@ -129,7 +115,16 @@
         ]
       }
     ],
-    "SessionEnd": [
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$CLAUDECODE\" = \"1\" ] && exit 0; INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vp \"作業が完了したわよ！\"",
+            "async": true
+          }
+        ]
+      },
       {
         "hooks": [
           {
@@ -171,15 +166,18 @@
     ]
 {{- end }}
   },
+  "worktree": {
+    "baseRef": "fresh"
+  },
   "statusLine": {
     "type": "command",
     "command": "bunx -y ccstatusline@latest",
     "padding": 0
   },
   "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
@@ -192,11 +190,19 @@
 {{- end }}
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "editorMode": "normal",
   "verbose": false,
+  "switchModelsOnFlag": false,
+  "teammateMode": "in-process",
   "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true
 }
