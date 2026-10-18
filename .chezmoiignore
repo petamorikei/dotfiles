@@ -16,3 +16,8 @@ AGENTS.md
 .gitconfig.work
 .zshrc.local
 {{ end }}
+
+# Work-only files
+{{ if not .work }}
+.gitconfig.work
+{{ end }}

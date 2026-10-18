@@ -9,4 +9,6 @@
 {{- end }}
 [core]
 	ignorecase = false
+{{- if .work }}
 {{ (bitwarden "item" "git-work-config").notes }}
+{{- end }}
