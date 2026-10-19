@@ -8,10 +8,10 @@
   "attribution": false,
   "permissions": {
     "allow": [
-{{- if eq .chezmoi.os "darwin" }}
+{%- if os() == "macos" %}
       "Skill(vp-reporter)",
       "Bash(vp *)",
-{{- end }}
+{%- endif %}
       "Bash(codex *)",
       "Bash(rg *)",
       "WebSearch",
@@ -29,7 +29,7 @@
   },
   "model": "opus",
   "hooks": {
-{{- if eq .chezmoi.os "darwin" }}
+{%- if os() == "macos" %}
     "Notification": [
       {
         "hooks": [
@@ -169,7 +169,7 @@
         ]
       }
     ]
-{{- end }}
+{%- endif %}
   },
   "worktree": {
     "baseRef": "fresh"
