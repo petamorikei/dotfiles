@@ -6,6 +6,9 @@
 "cargo:https://github.com/itsjunetime/tdf" = "latest"
 "cargo:typora-img-to-base64" = "latest"
 "cargo:voicepeak-cli" = "latest"
+# Not the Homebrew cask: Gatekeeper asks before the quarantined binary runs,
+# which stops brew bundle while it generates completions.
+codex = "latest"
 
 [dotfiles]
 # Karabiner-Elements rewrites karabiner.json in place of a symlinked file, so
