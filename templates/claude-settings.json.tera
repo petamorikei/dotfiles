@@ -29,7 +29,62 @@
   },
   "model": "opus",
   "hooks": {
+    "PreToolUse": [
 {%- if os() == "macos" %}
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
+          }
+        ]
+      },
+{%- endif %}
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ env.HOME }}/.atuin/bin/atuin hook claude-code"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+{%- if os() == "macos" %}
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
+          }
+        ]
+      },
+{%- endif %}
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ env.HOME }}/.atuin/bin/atuin hook claude-code"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ env.HOME }}/.atuin/bin/atuin hook claude-code"
+          }
+        ]
+      }
+    ]
+{%- if os() == "macos" %},
     "Notification": [
       {
         "hooks": [
@@ -61,17 +116,6 @@
         ]
       }
     ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\"",
-            "async": true
-          }
-        ]
-      }
-    ],
     "PreCompact": [
       {
         "matcher": "auto",
@@ -79,17 +123,6 @@
           {
             "type": "command",
             "command": "vp \"コンテキストを圧縮するわよ！\"",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\"",
             "async": true
           }
         ]
