@@ -7,6 +7,13 @@
 "cargo:typora-img-to-base64" = "latest"
 "cargo:voicepeak-cli" = "latest"
 
+# RARLAB's CLI; Homebrew disabled the rar cask because it fails Gatekeeper.
+# The http backend fills {{ version }} in literally, so bump both the version
+# and the 723 in the file name.
+[tools."http:rar"]
+version = "7.23"
+url = "https://www.rarlab.com/rar/rarmacos-{{ arch(arm64=\"arm\") }}-723.tar.gz"
+
 [dotfiles]
 # Karabiner-Elements rewrites karabiner.json in place of a symlinked file, so
 # link the whole directory as its documentation recommends.
