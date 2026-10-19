@@ -41,7 +41,7 @@ Envs name facts about the machine:
 | `host` | Not a container (services, Docker, Samba) |
 | `secrets` | Bitwarden is available (secret templates) |
 | `work` | Work git config (requires `secrets`) |
-| `ubuntu`, `manjaro` | Linux distribution |
+| `ubuntu` | Ubuntu (tools its apt ships too old) |
 
 Packages keep their existing source: Homebrew on macOS, apt/pacman/AUR on
 Linux, mise for tools Ubuntu's apt ships too old, cargo for Rust tools.

@@ -1,8 +1,11 @@
 # Linux only (loaded through auto_env). Ubuntu and Manjaro share this file:
 # apt: entries apply where apt exists and pacman:/aur: entries where pacman
-# does. Distro-only tools live in config.ubuntu.toml and config.manjaro.toml.
+# does. Ubuntu-only tools live in config.ubuntu.toml.
 
 [tools]
+delta = "latest"
+harper-ls = "latest"
+watchexec = "latest"
 "cargo:erdtree" = "latest"
 "cargo:hwatch" = "latest"
 "cargo:https://github.com/itsjunetime/tdf" = { version = "latest", os = ["linux/x64"] }
