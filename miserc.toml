@@ -1,0 +1,4 @@
+# Read before any other config. Loads config.macos.toml or config.linux.toml
+# for the current platform. The machine's own env list (desktop, secrets, ...)
+# lives in miserc.local.toml, which kickstart writes and git ignores.
+auto_env = true

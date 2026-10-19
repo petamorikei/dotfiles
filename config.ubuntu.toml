@@ -1,0 +1,35 @@
+# env: ubuntu. Ubuntu's apt ships old versions of these tools, so mise
+# installs them instead.
+
+[tools]
+bat = "latest"
+btop = "latest"
+cmake = "latest"
+codex = "latest"
+delta = "latest"
+deno = "latest"
+dua = "latest"
+fastfetch = "latest"
+fd = "latest"
+ffmpeg = "latest"
+github-cli = "latest"
+gitui = "latest"
+harper-ls = "latest"
+helix = "latest"
+imagemagick = "latest"
+jq = "latest"
+lsd = "latest"
+ripgrep = "latest"
+watchexec = "latest"
+yazi = "latest"
+yt-dlp = "latest"
+"cargo:onefetch" = "latest"
+"cargo:pueue" = "latest"
+"cargo:sheldon" = "latest"
+"cargo:tealdeer" = "latest"
+"cargo:topgrade" = "latest"
+"cargo:treemd" = "latest"
+"cargo:viu" = "latest"
+
+[bootstrap.packages]
+"snap:ghostty" = { classic = true, env = "desktop" }

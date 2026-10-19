@@ -1,0 +1,5 @@
+# env: work (requires secrets). ~/.gitconfig adds its work block when this env
+# is selected.
+
+[dotfiles]
+"~/.gitconfig.work" = { source = "templates/gitconfig.work.tera", mode = "template", permissions = "0600" }

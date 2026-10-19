@@ -1,0 +1,69 @@
+# Shared by every machine. Platform files (config.macos.toml,
+# config.linux.toml) load through auto_env; the env files (config.<env>.toml)
+# load for the envs listed in miserc.local.toml. See README.md.
+min_version = "2026.10.13"
+
+[settings]
+# Let cargo-binstall use cargo-quickinstall like plain cargo-binstall does, so
+# crates without author-published binaries still install prebuilt artifacts.
+cargo.binstall_quickinstall = true
+
+[tools]
+bun = "latest"
+fnox = "latest"
+node = "latest"
+pnpm = "latest"
+# mise installs cargo-binstall before the cargo: tools.
+cargo-binstall = "latest"
+"cargo:cargo-cache" = "latest"
+"cargo:cargo-edit" = "latest"
+"cargo:cargo-modules" = "latest"
+"cargo:cargo-outdated" = { version = "latest", locked = true }
+"cargo:cargo-update" = "latest"
+"cargo:kuwahara-filter" = "latest"
+"cargo:minhtml" = "latest"
+"cargo:sd" = "latest"
+
+[dotfiles]
+"~" = { source = "home", mode = "symlink-each" }
+"~/.zshrc" = { source = "templates/zshrc.tera", mode = "template" }
+"~/.claude/settings.json" = { source = "templates/claude-settings.json.tera", mode = "template" }
+# Zed rewrites its settings file, which would replace a symlink.
+"~/.config/zed/settings.json" = { source = "files/zed-settings.json", mode = "copy", permissions = "0600" }
+
+[bootstrap.user]
+# /bin/zsh is the default on macOS and exists on Ubuntu and Manjaro too.
+login_shell = "/bin/zsh"
+
+# Values come from the environment; `mise run apply` fills them from Bitwarden
+# through fnox.toml. Only templates in config.secrets.toml and config.work.toml
+# use them.
+[bootstrap.secrets]
+discord_webhook_url = "DISCORD_WEBHOOK_URL"
+git_email = "GIT_EMAIL"
+git_name = "GIT_NAME"
+git_work_config = "GIT_WORK_CONFIG"
+git_work_user = "GIT_WORK_USER"
+ssh_config = "SSH_CONFIG"
+
+[bootstrap.hooks.post-tools]
+run = [
+  "mise exec -- sheldon lock",
+  # bat's ayu-mirage theme (selected by ~/.config/bat/config) is downloaded
+  # rather than vendored.
+  '''
+  themes="$(mise exec -- bat --config-dir)/themes"
+  if [ ! -f "$themes/ayu-mirage.tmTheme" ]; then
+    mkdir -p "$themes"
+    curl -fsSL -o "$themes/ayu-mirage.tmTheme" https://raw.githubusercontent.com/vampirelinux/css/master/ayu-mirage.tmTheme
+    mise exec -- bat cache --build
+  fi
+  ''',
+]
+
+# Day-to-day apply: `mise run apply` from any directory.
+[tasks.apply]
+description = "Apply this config with secrets from Bitwarden (needs BW_SESSION)"
+# fnox looks for fnox.toml from the working directory upward.
+dir = "{{ xdg_config_home }}/mise"
+run = "fnox exec -- mise bootstrap"

@@ -1,0 +1,13 @@
+# Bitwarden item references for the [bootstrap.secrets] in config.toml. Only
+# names live here; values stay in the vault. Needs BW_SESSION.
+
+[providers.bitwarden]
+type = "bitwarden"
+
+[secrets]
+DISCORD_WEBHOOK_URL = { provider = "bitwarden", value = "dotfiles-secrets/DISCORD_WEBHOOK_URL" }
+GIT_EMAIL = { provider = "bitwarden", value = "dotfiles-secrets/GIT_EMAIL" }
+GIT_NAME = { provider = "bitwarden", value = "dotfiles-secrets/GIT_NAME" }
+GIT_WORK_CONFIG = { provider = "bitwarden", value = "git-work-config/notes" }
+GIT_WORK_USER = { provider = "bitwarden", value = "git-work-user/notes" }
+SSH_CONFIG = { provider = "bitwarden", value = "ssh-config/notes" }

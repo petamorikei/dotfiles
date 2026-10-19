@@ -1,0 +1,98 @@
+# macOS only (loaded through auto_env).
+
+[tools]
+"cargo:git-delta" = "latest"
+"cargo:harper-ls" = { version = "latest", locked = true }
+"cargo:https://github.com/itsjunetime/tdf" = "latest"
+"cargo:typora-img-to-base64" = "latest"
+"cargo:voicepeak-cli" = "latest"
+
+[dotfiles]
+# Karabiner-Elements rewrites karabiner.json in place of a symlinked file, so
+# link the whole directory as its documentation recommends.
+"~/.config/karabiner" = { source = "home-macos/.config/karabiner", mode = "symlink" }
+"~/.config/vp/config.toml" = { source = "home-macos/.config/vp/config.toml", mode = "symlink" }
+
+[bootstrap.hooks]
+# Real Homebrew installs the Brewfile; mas entries only on physical machines.
+post-packages = '''
+BREWFILE_MAS={% if mise_env is defined and "physical" in mise_env %}1{% else %}0{% endif %} brew bundle --no-upgrade --file "{{ xdg_config_home }}/mise/Brewfile"
+'''
+
+# ── System settings ─────────────────────────────────────────
+# Enforced on every bootstrap: change them here, not in System Settings.
+
+[bootstrap.macos.dock]
+apps = ["/System/Library/CoreServices/Spotlight.app"]
+autohide = true
+mru_spaces = false
+show_recents = false
+
+[bootstrap.macos.finder]
+show_all_files = true
+show_pathbar = true
+show_status_bar = true
+sort_folders_first = true
+
+[bootstrap.macos.keyboard]
+automatic_capitalization = false
+automatic_spelling_correction = false
+initial_key_repeat = 25
+key_repeat = 2
+
+[bootstrap.macos.defaults."com.apple.dock"]
+mineffect = "scale"
+showAppExposeGestureEnabled = true
+# Hot corner: bottom right shows the desktop
+wvous-br-corner = 4
+wvous-br-modifier = 0
+
+[bootstrap.macos.defaults."com.apple.finder"]
+FXDefaultSearchScope = "SCcf"
+NewWindowTarget = "PfHm"
+"NSWindowTabbingShoudShowTabBarKey-com.apple.finder.TBrowserWindow" = true
+_FXShowPosixPathInTitle = true
+_FXSortFoldersFirstOnDesktop = true
+
+[bootstrap.macos.defaults.NSGlobalDomain]
+AppleShowAllExtensions = true
+NSAutomaticDashSubstitutionEnabled = false
+NSAutomaticPeriodSubstitutionEnabled = false
+NSAutomaticQuoteSubstitutionEnabled = false
+NSNavPanelExpandedStateForSaveMode = true
+WebAutomaticSpellingCorrectionEnabled = false
+"com.apple.springing.delay" = 0.2
+
+[bootstrap.macos.defaults]
+"com.apple.AppleMultitouchTrackpad" = { TrackpadThreeFingerVertSwipeGesture = 2 }
+"com.apple.CrashReporter" = { DialogType = "none" }
+"com.apple.WindowManager" = { EnableStandardClickToShowDesktop = false }
+"com.apple.desktopservices" = { DSDontWriteNetworkStores = true }
+"com.apple.dt.Xcode" = { ShowBuildOperationDuration = true }
+"com.apple.frameworks.diskimages" = { skip-verify = true, skip-verify-locked = true, skip-verify-remote = true }
+"com.apple.inputmethod.Kotoeri" = { JIMPrefLiveConversionKey = false }
+"com.apple.menuextra.clock" = { DateFormat = "M月d日(EEE)  H:mm:ss" }
+"com.apple.screencapture" = { disable-shadow = true }
+"com.apple.sidecar.display" = { showTouchbar = false, sidebarShown = false }
+"com.apple.touchbar.agent" = { PresentationModeGlobal = "fullControlStrip" }
+# Hide the input source indicator when switching languages.
+kCFPreferencesAnyApplication = { TSMLanguageIndicatorEnabled = 0 }
+
+# Per-machine preferences (defaults -currentHost)
+[[bootstrap.macos.defaults_entries]]
+domain = "com.apple.screensaver"
+key = "idleTime"
+host = "current"
+value = 0
+
+[[bootstrap.macos.defaults_entries]]
+domain = "com.apple.coreservices.useractivityd"
+key = "ActivityAdvertisingAllowed"
+host = "current"
+value = false
+
+[[bootstrap.macos.defaults_entries]]
+domain = "com.apple.coreservices.useractivityd"
+key = "ActivityReceivingAllowed"
+host = "current"
+value = false

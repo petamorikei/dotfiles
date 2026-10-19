@@ -1,0 +1,28 @@
+# env: host (not a container). Services and packages a container image does
+# not need.
+
+[bootstrap.apt.sources.docker]
+uris = "https://download.docker.com/linux/ubuntu"
+components = "stable"
+key = "https://download.docker.com/linux/ubuntu/gpg"
+fingerprint = "9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88"
+
+[bootstrap.packages]
+# Ubuntu
+"apt:containerd.io" = "latest"
+"apt:docker-buildx-plugin" = "latest"
+"apt:docker-ce" = "latest"
+"apt:docker-ce-cli" = "latest"
+"apt:docker-compose-plugin" = "latest"
+"apt:samba" = "latest"
+"apt:snapd" = "latest"
+
+# Manjaro
+"pacman:docker" = "latest"
+"pacman:docker-compose" = "latest"
+"pacman:samba" = "latest"
+
+# Linux system service: macOS ignores it, and packages install first.
+[bootstrap.services.docker]
+state = "running"
+enabled = true

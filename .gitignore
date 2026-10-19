@@ -1,1 +1,8 @@
 .claude/*.local.*
+
+# Per-machine selections written by kickstart
+miserc.local.toml
+*.local.toml
+
+# Written by Karabiner-Elements into its linked directory
+home-macos/.config/karabiner/automatic_backups/
