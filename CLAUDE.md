@@ -1,73 +1,43 @@
-# CLAUDE.md
+# CLAUDE.md / AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for coding agents working in this repository. `AGENTS.md` is a symlink
+to this file.
 
 ## Repository Overview
 
-This is a chezmoi dotfiles repository. Chezmoi manages dotfiles by storing them in this source directory and applying them to the home directory (`~`).
+This repository is a machine's global mise config, cloned to `~/.config/mise`
+with `mise bootstrap --adopt petamorikei/dotfiles`. `mise bootstrap` applies
+packages, tools, dotfiles, and macOS settings from it. kickstart (a separate,
+private repository) runs it on new machines.
+
+See README.md for the file layout and the env list.
+
+## Rules
+
+- **The repository is public.** Never commit secrets, host names, IP addresses,
+  network layout, or anything that identifies an employer in plain text. Read
+  secrets in templates with `secret(name=...)` (declared in `[bootstrap.secrets]`
+  in config.toml, mapped to Bitwarden in fnox.toml).
+- **Keep package sources.** Homebrew packages go in `Brewfile` (installed by
+  real Homebrew); do not use mise's `brew:` / `brew-cask:` managers. Linux
+  packages use `apt:`, `pacman:`, `aur:` in `[bootstrap.packages]`.
+- Templates use Tera. Branch on `os()` for the platform and on
+  `mise_env is defined and "<env>" in mise_env` for envs. Templates cannot see
+  the distro; check `/etc/os-release` at runtime instead.
+- Keep `. "$HOME/.atuin/bin/env"` and `atuin init zsh` in
+  `templates/zshrc.tera` as they are: atuin's installer appends its own lines
+  when they are missing.
 
 ## Common Commands
 
 ```bash
-# Apply changes to home directory
-chezmoi apply
-
-# Apply changes with verbose output
-chezmoi apply -v
-
-# Preview changes before applying (dry run)
-chezmoi diff
-
-# Add a file from home directory to chezmoi
-chezmoi add ~/.filename
-
-# Edit a managed file (opens in $EDITOR)
-chezmoi edit ~/.filename
-
-# Update from remote and apply
-chezmoi update
-
-# Re-add a file after manual edits in source
-chezmoi re-add ~/.filename
-
-# Check managed files status
-chezmoi status
-
-# Initialize on a new machine
-chezmoi init <github-username>
+mise run apply                 # apply with secrets (needs BW_SESSION)
+mise bootstrap --dry-run       # preview (renders no dotfile templates)
+mise bootstrap status          # state of every part
+mise dot status                # dotfile state
+mise bootstrap secrets status  # which secret values are available
+brew bundle check --file Brewfile
 ```
 
-## File Naming Conventions
-
-Chezmoi uses special prefixes in filenames:
-
-- `dot_` → becomes `.` (e.g., `dot_bashrc` → `.bashrc`)
-- `private_` → file permissions set to 0600
-- `executable_` → file permissions include execute bit
-- `empty_` → ensures file exists, even if empty
-- `create_` → only creates if file doesn't exist
-- `modify_` → script that modifies existing file
-- `remove_` → removes file from target
-- `run_` → script to run (not a managed file)
-- `run_once_` → script runs once per machine
-- `run_onchange_` → script runs when its content changes
-
-Prefixes can be combined: `private_dot_ssh/private_config`
-
-## Template Files
-
-Files ending in `.tmpl` are Go templates. Use for machine-specific configuration:
-
-```
-{{ .chezmoi.hostname }}
-{{ .chezmoi.os }}
-{{ .chezmoi.arch }}
-{{ if eq .chezmoi.os "darwin" }}macOS specific{{ end }}
-```
-
-## Directory Structure
-
-- `.chezmoiignore` - patterns to ignore when applying
-- `.chezmoiexternal.toml` - external files/archives to download
-- `.chezmoiroot` - specifies a subdirectory as the root
-- `.chezmoidata.yaml` - template data
+`mise bootstrap status` and `mise dot diff` render templates, which needs the
+secret values on machines with the `secrets` env.
