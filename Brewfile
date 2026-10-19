@@ -126,11 +126,6 @@ cask "zoom"
 # cask "microsoft-office"
 # cask "microsoft-teams"
 
-if Hardware::CPU.intel?
-  cask "intel-power-gadget"
-  cask "mipony"
-end
-
 # Mac App Store apps fail to sign in on virtual machines, so the hook sets
 # BREWFILE_MAS=1 only when the `physical` env is selected.
 if ENV["BREWFILE_MAS"] == "1"
