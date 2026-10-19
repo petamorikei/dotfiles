@@ -22,7 +22,7 @@
 "apt:git" = "latest"
 "apt:libasound2-dev" = "latest"
 "apt:libexpat1-dev" = "latest"
-"apt:libfreetype6-dev" = "latest"
+"apt:libfreetype-dev" = "latest"
 "apt:libharfbuzz-dev" = "latest"
 "apt:libssl-dev" = "latest"
 "apt:libxcb-composite0-dev" = "latest"
