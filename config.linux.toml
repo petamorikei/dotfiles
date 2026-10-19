@@ -10,7 +10,8 @@
 # npm, not pnpm: pnpm's layout breaks bw's bundled require('buffer/').
 # https://github.com/bitwarden/clients/issues/20547
 "npm:@bitwarden/cli" = "latest"
-"npm:vidls" = "latest"
+# Below mise's default weekly-download threshold for npm packages.
+"npm:vidls" = { version = "latest", allow_low_downloads = true }
 
 [bootstrap.packages]
 # Ubuntu
