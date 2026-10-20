@@ -1,1 +1,1 @@
-{{ secret(name="git_work_user") -}}
+{{ secret(name="git_work_user") }}
