@@ -18,7 +18,7 @@ url = "https://www.rarlab.com/rar/rarmacos-{{ arch(arm64=\"arm\") }}-723.tar.gz"
 # Karabiner-Elements rewrites karabiner.json in place of a symlinked file, so
 # link the whole directory as its documentation recommends.
 "~/.config/karabiner" = { source = "home-macos/.config/karabiner", mode = "symlink" }
-"~/.config/vp/config.toml" = { source = "home-macos/.config/vp/config.toml", mode = "symlink" }
+"~/.config/vpsay/config.toml" = { source = "home-macos/.config/vpsay/config.toml", mode = "symlink" }
 
 [bootstrap.hooks]
 # Real Homebrew installs the Brewfile; mas entries only on physical machines.
