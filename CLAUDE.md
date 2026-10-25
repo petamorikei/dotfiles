@@ -39,5 +39,9 @@ mise bootstrap secrets status  # which secret values are available
 brew bundle check --file Brewfile
 ```
 
+`brew bundle check` skips the `mas` block of the Brewfile unless
+`HOMEBREW_BREWFILE_MAS=1` is set, as the post-packages hook does. brew drops
+variables without the `HOMEBREW_` prefix.
+
 `mise bootstrap status` and `mise dot diff` render templates, which needs the
 secret values on machines with the `secrets` env.

@@ -23,7 +23,7 @@ url = "https://www.rarlab.com/rar/rarmacos-{{ arch(arm64=\"arm\") }}-723.tar.gz"
 [bootstrap.hooks]
 # Real Homebrew installs the Brewfile; mas entries only on physical machines.
 post-packages = '''
-BREWFILE_MAS={% if mise_env is defined and "physical" in mise_env %}1{% else %}0{% endif %} brew bundle --no-upgrade --file "{{ xdg_config_home }}/mise/Brewfile"
+HOMEBREW_BREWFILE_MAS={% if mise_env is defined and "physical" in mise_env %}1{% else %}0{% endif %} brew bundle --no-upgrade --file "{{ xdg_config_home }}/mise/Brewfile"
 '''
 
 # ── System settings ─────────────────────────────────────────

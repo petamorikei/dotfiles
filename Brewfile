@@ -126,9 +126,12 @@ cask "zoom"
 # cask "microsoft-office"
 # cask "microsoft-teams"
 
+# The hook sets these variables. brew drops environment variables without the
+# HOMEBREW_ prefix before it reads the Brewfile, so they carry that prefix.
+#
 # Mac App Store apps fail to sign in on virtual machines, so the hook sets
-# BREWFILE_MAS=1 only when the `physical` env is selected.
-if ENV["BREWFILE_MAS"] == "1"
+# HOMEBREW_BREWFILE_MAS=1 only when the `physical` env is selected.
+if ENV["HOMEBREW_BREWFILE_MAS"] == "1"
   mas "Authenticator App - OneAuth", id: 1142928979
   mas "Spark", id: 1176895641
   mas "Pixelmator Pro", id: 1289583905
