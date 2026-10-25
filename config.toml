@@ -37,7 +37,8 @@ login_shell = "/bin/zsh"
 
 # Values come from the environment; `mise run apply` fills them from Bitwarden
 # through fnox.toml. Only templates in config.secrets.toml and config.work.toml
-# use them.
+# use them, except withsecure_subscription_key: the post-packages hook in
+# config.macos.toml reads its variable directly.
 [bootstrap.secrets]
 discord_webhook_url = "DISCORD_WEBHOOK_URL"
 git_email = "GIT_EMAIL"
@@ -45,6 +46,7 @@ git_name = "GIT_NAME"
 git_work_config = "GIT_WORK_CONFIG"
 git_work_user = "GIT_WORK_USER"
 ssh_config = "SSH_CONFIG"
+withsecure_subscription_key = "WITHSECURE_SUBSCRIPTION_KEY"
 
 [bootstrap.hooks.post-tools]
 run = [

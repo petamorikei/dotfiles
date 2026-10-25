@@ -21,9 +21,19 @@ url = "https://www.rarlab.com/rar/rarmacos-{{ arch(arm64=\"arm\") }}-723.tar.gz"
 "~/.config/vpsay/config.toml" = { source = "home-macos/.config/vpsay/config.toml", mode = "symlink" }
 
 [bootstrap.hooks]
-# Real Homebrew installs the Brewfile; mas entries only on physical machines.
+# Real Homebrew installs the Brewfile; mas entries only on physical machines,
+# work entries only with the `work` env.
 post-packages = '''
-HOMEBREW_BREWFILE_MAS={% if mise_env is defined and "physical" in mise_env %}1{% else %}0{% endif %} brew bundle --no-upgrade --file "{{ xdg_config_home }}/mise/Brewfile"
+HOMEBREW_BREWFILE_MAS={% if mise_env is defined and "physical" in mise_env %}1{% else %}0{% endif %} \
+HOMEBREW_BREWFILE_WORK={% if mise_env is defined and "work" in mise_env %}1{% else %}0{% endif %} \
+brew bundle --no-upgrade --file "{{ xdg_config_home }}/mise/Brewfile"
+{% if mise_env is defined and "work" in mise_env -%}
+# WithSecure installs without a key. Activate it once: the agent keeps its
+# subscription state in fsmac/substatus, which is empty until activation.
+if [ -z "$(ls -A /Library/WithSecure/fsmac/substatus 2>/dev/null)" ]; then
+  sudo /Library/WithSecure/bin/activator --subscription-key "${WITHSECURE_SUBSCRIPTION_KEY:?run mise run apply for the WithSecure subscription key}"
+fi
+{%- endif %}
 '''
 
 # ── System settings ─────────────────────────────────────────

@@ -1,6 +1,7 @@
 # macOS packages, installed with Homebrew by the post-packages hook in
 # config.macos.toml (`brew bundle --no-upgrade`). mise's own `brew:` manager
-# reimplements Homebrew, so the real Homebrew installs these.
+# reimplements Homebrew, so the real Homebrew installs these. Casks Homebrew
+# does not ship live in petamorikei/homebrew-tap.
 
 # Formulae
 brew "bat"
@@ -141,4 +142,11 @@ if ENV["HOMEBREW_BREWFILE_MAS"] == "1"
   mas "Xcode", id: 497799835
   mas "LINE", id: 539883307
   mas "DaVinci Resolve", id: 571213070
+end
+
+# The hook sets HOMEBREW_BREWFILE_WORK=1 only when the `work` env is selected,
+# and activates WithSecure with the subscription key afterwards.
+if ENV["HOMEBREW_BREWFILE_WORK"] == "1"
+  tap "petamorikei/tap"
+  cask "petamorikei/tap/withsecure-elements-agent"
 end

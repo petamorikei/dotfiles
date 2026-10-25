@@ -11,3 +11,6 @@ GIT_NAME = { provider = "bitwarden", value = "dotfiles-secrets/GIT_NAME" }
 GIT_WORK_CONFIG = { provider = "bitwarden", value = "git-work-config/notes" }
 GIT_WORK_USER = { provider = "bitwarden", value = "git-work-user/notes" }
 SSH_CONFIG = { provider = "bitwarden", value = "ssh-config/notes" }
+# Only work machines need it; the post-packages hook stops there when it is
+# missing.
+WITHSECURE_SUBSCRIPTION_KEY = { provider = "bitwarden", value = "dotfiles-secrets/WITHSECURE_SUBSCRIPTION_KEY", if_missing = "warn" }

@@ -29,7 +29,7 @@ apply: edit the source here, then apply.
 | `config.toml` | Always |
 | `config.macos.toml`, `config.linux.toml` | By platform (`auto_env` in `miserc.toml`) |
 | `config.<env>.toml` | When the env is in `miserc.local.toml` (written by kickstart, not committed) |
-| `Brewfile` | macOS, by the `post-packages` hook (real Homebrew, `brew bundle --no-upgrade`) |
+| `Brewfile` | macOS, by the `post-packages` hook (real Homebrew, `brew bundle --no-upgrade`). Casks Homebrew does not ship come from [petamorikei/homebrew-tap](https://github.com/petamorikei/homebrew-tap) |
 | `fnox.toml` | `mise run apply`: Bitwarden item references for `[bootstrap.secrets]` |
 
 Envs name facts about the machine:
@@ -40,7 +40,7 @@ Envs name facts about the machine:
 | `physical` | Not a virtual machine (Mac App Store apps) |
 | `host` | Not a container (services, Docker, Samba) |
 | `secrets` | Bitwarden is available (secret templates) |
-| `work` | Work git config (requires `secrets`) |
+| `work` | Work git config, WithSecure on macOS (requires `secrets`) |
 | `ubuntu` | Ubuntu (tools its apt ships too old) |
 
 Packages keep their existing source: Homebrew on macOS, apt/pacman/AUR on
