@@ -166,12 +166,6 @@ function op() { if [ -z "$1" ]; then xdg-open .; else xdg-open "$@"; fi }
 {%- endif %}
 
 ############################
-# Plugins
-############################
-# Source sheldon
-eval "$(sheldon source)"
-
-############################
 # Development Tools
 ############################
 # Deno
@@ -184,6 +178,9 @@ eval "$(${HOMEBREW_PREFIX}/bin/mise activate zsh)"
 {%- else %}
 eval "$(~/.local/bin/mise activate zsh)"
 {%- endif %}
+
+# Source sheldon. After mise: Ubuntu gets sheldon from mise.
+eval "$(sheldon source)"
 
 # pnpm
 {%- if os() == "macos" %}
