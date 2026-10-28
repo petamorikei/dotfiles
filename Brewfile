@@ -70,7 +70,6 @@ cask "betterzip"
 cask "bitwarden"
 cask "codex"
 cask "coteditor"
-cask "crossover"
 cask "cyberduck"
 cask "dayflow"
 cask "deskpad"
@@ -98,10 +97,8 @@ cask "monitorcontrol"
 cask "mountain-duck"
 cask "notion"
 cask "obs"
-cask "ogdesign-eagle"
 cask "opendisplay"
 cask "orbstack"
-cask "parallels@20"
 cask "parsec"
 cask "qmk-toolbox"
 cask "quicklook-video"
@@ -111,7 +108,6 @@ cask "smoothcsv"
 cask "soulver"
 cask "spacedrive"
 cask "spotify"
-cask "steam"
 cask "tableplus"
 cask "tailscale-app"
 cask "typora"
@@ -136,7 +132,6 @@ if ENV["HOMEBREW_BREWFILE_MAS"] == "1"
   mas "Authenticator App - OneAuth", id: 1142928979
   mas "Spark", id: 1176895641
   mas "Pixelmator Pro", id: 1289583905
-  mas "UpNote", id: 1398373917
   mas "Reeder Classic", id: 1529448980
   mas "EdgeView 3", id: 1580323719
   mas "Xcode", id: 497799835
@@ -149,4 +144,17 @@ end
 if ENV["HOMEBREW_BREWFILE_WORK"] == "1"
   tap "petamorikei/tap"
   cask "petamorikei/tap/withsecure-elements-agent"
+end
+
+# Entries for machines without the `work` env.
+if ENV["HOMEBREW_BREWFILE_WORK"] != "1"
+  cask "crossover"
+  cask "ogdesign-eagle"
+  cask "parallels@20"
+  cask "steam"
+
+  # Mac App Store apps, only on physical machines as above.
+  if ENV["HOMEBREW_BREWFILE_MAS"] == "1"
+    mas "UpNote", id: 1398373917
+  end
 end
