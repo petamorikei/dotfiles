@@ -1,3 +1,7 @@
+{#- Desktops report by voice: VOICEPEAK (vpsay) on the main machine, VOICEVOX
+    (vvsay) on the others. -#}
+{%- set main = mise_env is defined and "main" in mise_env -%}
+{%- set voice = mise_env is defined and "desktop" in mise_env -%}
 {
   "cleanupPeriodDays": 99999,
   "env": {
@@ -10,9 +14,12 @@
   "dialogExpiry": "never",
   "permissions": {
     "allow": [
-{%- if os() == "macos" %}
+{%- if main %}
       "Skill(vp-reporter)",
       "Bash(vpsay *)",
+{%- elif voice %}
+      "Skill(vv-reporter)",
+      "Bash(vvsay --bg --queue *)",
 {%- endif %}
       "Bash(codex *)",
       "Bash(rg *)",
@@ -86,33 +93,24 @@
         ]
       }
     ]
-{%- if os() == "macos" %},
+{%- if voice %},
     "Notification": [
+{%- if os() == "macos" %}
       {
         "hooks": [
           {
             "type": "command",
-            "command": "vpsay \"クロードからの通知があるわよ！\"",
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
             "async": true
           }
         ]
       },
+{%- endif %}
       {
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\"",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "command": "{% if main %}vpsay \"クロードからの通知があるわよ！\"{% else %}vvsay --bg --queue \"クロードからの通知があります\"{% endif %}",
             "async": true
           }
         ]
@@ -124,7 +122,42 @@
         "hooks": [
           {
             "type": "command",
-            "command": "vpsay \"コンテキストを圧縮するわよ！\"",
+            "command": "{% if main %}vpsay \"コンテキストを圧縮するわよ！\"{% else %}vvsay --bg --queue \"コンテキストを圧縮します\"{% endif %}",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+{%- if os() == "macos" %}
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
+            "async": true
+          }
+        ]
+      },
+{%- endif %}
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && {% if main %}vpsay \"作業が完了したわよ！\"{% else %}vvsay --bg --queue \"作業が完了しました\"{% endif %}",
+            "async": true
+          }
+        ]
+      }
+    ]
+{%- endif %}
+{%- if os() == "macos" %},
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.config/iterm2/cc-status\"",
             "async": true
           }
         ]
@@ -141,26 +174,6 @@
       }
     ],
     "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.config/iterm2/cc-status\"",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "INPUT=$(cat); echo \"$INPUT\" | jq -e '.stop_hook_active | not' > /dev/null && vpsay \"作業が完了したわよ！\"",
-            "async": true
-          }
-        ]
-      },
       {
         "hooks": [
           {

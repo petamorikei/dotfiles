@@ -8,6 +8,8 @@ brew "bat"
 brew "bitwarden-cli"
 brew "btop"
 brew "ccusage"
+# Builds Open JTalk for vvsay (config.desktop.toml).
+brew "cmake"
 brew "coreutils"
 brew "devcontainer"
 brew "dua-cli"
@@ -114,7 +116,6 @@ cask "typora"
 cask "utm"
 cask "visual-studio-code"
 cask "visual-studio-code@insiders"
-cask "voicepeak"
 cask "windows-app"
 cask "zed"
 cask "zoom"
@@ -137,6 +138,13 @@ if ENV["HOMEBREW_BREWFILE_MAS"] == "1"
   mas "Xcode", id: 497799835
   mas "LINE", id: 539883307
   mas "DaVinci Resolve", id: 571213070
+end
+
+# The hook sets HOMEBREW_BREWFILE_MAIN=1 only when the `main` env is selected.
+# VOICEPEAK's license covers only the main machine; the others speak with
+# VOICEVOX (config.desktop.toml).
+if ENV["HOMEBREW_BREWFILE_MAIN"] == "1"
+  cask "voicepeak"
 end
 
 # The hook sets HOMEBREW_BREWFILE_WORK=1 only when the `work` env is selected,

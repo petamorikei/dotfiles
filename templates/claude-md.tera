@@ -1,5 +1,7 @@
-- Always use vp-reporter skills to report progress with voice reading.
+{% if mise_env is defined and "desktop" in mise_env -%}
+- Always use {% if "main" in mise_env %}vp-reporter{% else %}vv-reporter{% endif %} skills to report progress with voice reading.
 
+{% endif -%}
 - When using the Playwright CLI (playwright-cli skill), always specify a session name with `-s=<session_name>`.
   - This prevents independent Claude sessions from interfering with each other's Playwright sessions.
   - Example: `playwright-cli -s=task123 open example.com`

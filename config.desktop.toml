@@ -2,6 +2,28 @@
 
 [tools]
 "cargo:noti-rs" = "latest"
+# vvsay (VOICEVOX) speaks Claude Code's voice reports on every desktop but the
+# `main` one, which uses VOICEPEAK. voicevox_core is not on crates.io, so it
+# builds from git; cmake comes from the system packages (Brewfile, apt, pacman)
+# because they install before the tools.
+"cargo:https://github.com/petamorikei/voicevox-cli" = { version = "latest", locked = true }
+
+[dotfiles]
+"~/.config/vvsay/config.toml" = { source = "home-desktop/.config/vvsay/config.toml", mode = "symlink" }
+
+# The skill that tells Claude Code how to speak through vvsay.
+[bootstrap.repos]
+"~/.claude/skills/vv-reporter" = { url = "https://github.com/petamorikei/vv-reporter.git", ref = "main" }
+
+# VOICEVOX CORE assets (ONNX Runtime, dictionary, voice models; about 1.6 GB).
+# --accept-terms accepts the terms of use of the ONNX Runtime and the voice
+# models, which the owner of these machines has read and accepted.
+[bootstrap.hooks.post-tools]
+run = '''
+if [ ! -d "$HOME/.local/share/vvsay/models" ]; then
+  mise exec -- vvsay --setup --accept-terms </dev/null
+fi
+'''
 
 [bootstrap.apt.sources.vscode]
 uris = "https://packages.microsoft.com/repos/code"
@@ -41,6 +63,7 @@ os = "linux"
 [bootstrap.packages]
 # Ubuntu
 "apt:chrome-gnome-shell" = "latest"
+"apt:cmake" = "latest"
 "apt:chromium-browser" = "latest"
 "apt:code" = "latest"
 "apt:fcitx5" = "latest"

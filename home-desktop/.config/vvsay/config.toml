@@ -1,0 +1,8 @@
+default_preset = "metan"
+# assets_dir = "~/.local/share/vvsay"
+
+[[presets]]
+name = "metan"
+narrator = "四国めたん"
+style = "あまあま"
+speed = 1.2

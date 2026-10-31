@@ -36,7 +36,8 @@ Envs name facts about the machine:
 
 | Env | Meaning |
 |---|---|
-| `desktop` | Has a GUI (always on macOS) |
+| `desktop` | Has a GUI (always on macOS); Claude Code reports by voice |
+| `main` | The main machine: voice reports use VOICEPEAK instead of VOICEVOX |
 | `physical` | Not a virtual machine (Mac App Store apps) |
 | `host` | Not a container (services, Docker, Samba) |
 | `secrets` | Bitwarden is available (secret templates) |

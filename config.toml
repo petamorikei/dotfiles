@@ -28,6 +28,7 @@ cargo-binstall = "latest"
 "~" = { source = "home", mode = "symlink-each" }
 "~/.zshrc" = { source = "templates/zshrc.tera", mode = "template" }
 "~/.claude/settings.json" = { source = "templates/claude-settings.json.tera", mode = "template" }
+"~/.claude/CLAUDE.md" = { source = "templates/claude-md.tera", mode = "template" }
 # Zed rewrites its settings file, which would replace a symlink.
 "~/.config/zed/settings.json" = { source = "files/zed-settings.json", mode = "copy", permissions = "0600" }
 
