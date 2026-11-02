@@ -3,6 +3,10 @@
 # reimplements Homebrew, so the real Homebrew installs these. Casks Homebrew
 # does not ship live in petamorikei/homebrew-tap.
 
+# Taps
+tap "alexstrnik/browserino"
+tap "openai/tools"
+
 # Formulae
 brew "bat"
 brew "bitwarden-cli"
@@ -34,6 +38,7 @@ brew "media-info"
 brew "mise"
 brew "mpv"
 brew "onefetch"
+brew "openai/tools/tart"
 brew "pandoc"
 brew "peco"
 brew "poppler"
@@ -65,12 +70,14 @@ brew "zoxide"
 
 # Casks
 cask "affinity"
+cask "alexstrnik/browserino/browserino"
 cask "alfred"
 cask "alt-tab"
 cask "bartender"
 cask "bettertouchtool"
 cask "betterzip"
 cask "bitwarden"
+cask "chatgpt"
 cask "codex"
 cask "coteditor"
 cask "cyberduck"
