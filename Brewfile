@@ -3,9 +3,11 @@
 # reimplements Homebrew, so the real Homebrew installs these. Casks Homebrew
 # does not ship live in petamorikei/homebrew-tap.
 
-# Taps
-tap "alexstrnik/browserino"
-tap "openai/tools"
+# Taps. Homebrew loads formulae and casks from a non-official tap only once
+# they are trusted; brew bundle records `trusted:` before it installs anything.
+tap "alexstrnik/browserino", trusted: { casks: ["browserino"] }
+# tart depends on softnet from the same tap.
+tap "openai/tools", trusted: { formulae: ["tart", "softnet"] }
 
 # Formulae
 brew "bat"
@@ -154,7 +156,7 @@ end
 # The hook sets HOMEBREW_BREWFILE_WORK=1 only when the `work` env is selected,
 # and activates WithSecure with the subscription key afterwards.
 if ENV["HOMEBREW_BREWFILE_WORK"] == "1"
-  tap "petamorikei/tap"
+  tap "petamorikei/tap", trusted: { casks: ["withsecure-elements-agent"] }
   cask "petamorikei/tap/withsecure-elements-agent"
   cask "microsoft-office"
   cask "microsoft-teams"
