@@ -19,7 +19,8 @@ On machines with the `secrets` env, use `mise run apply`: plain
 `mise bootstrap` stops because the secret templates have no values.
 
 Files under `home/` are symlinked into `~`, so edits to them land here
-directly. Templates under `templates/` and copies under `files/` are written on
+directly (a new file directly under `home/`, outside `.config`, needs its own
+entry in `config.toml`). Templates under `templates/` and copies under `files/` are written on
 apply: edit the source here, then apply.
 
 ## Layout

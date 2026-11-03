@@ -25,7 +25,11 @@ cargo-binstall = "latest"
 "cargo:sd" = "latest"
 
 [dotfiles]
-"~" = { source = "home", mode = "symlink-each" }
+# Not one "~" entry: with no record of its links yet, as on a new machine, mise
+# walks the whole target to find stale ones, and on macOS that reaches into
+# ~/Library and iCloud Drive. A new top-level file under home/ needs an entry.
+"~/.config" = { source = "home/.config", mode = "symlink-each" }
+"~/.p10k.zsh" = { source = "home/.p10k.zsh", mode = "symlink" }
 "~/.zshrc" = { source = "templates/zshrc.tera", mode = "template" }
 "~/.claude/settings.json" = { source = "templates/claude-settings.json.tera", mode = "template" }
 "~/.claude/CLAUDE.md" = { source = "templates/claude-md.tera", mode = "template" }
