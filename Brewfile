@@ -128,10 +128,6 @@ cask "windows-app"
 cask "zed"
 cask "zoom"
 
-# Microsoft packages are disabled because batch installation causes failures.
-# cask "microsoft-office"
-# cask "microsoft-teams"
-
 # The hook sets these variables. brew drops environment variables without the
 # HOMEBREW_ prefix before it reads the Brewfile, so they carry that prefix.
 #
@@ -160,6 +156,8 @@ end
 if ENV["HOMEBREW_BREWFILE_WORK"] == "1"
   tap "petamorikei/tap"
   cask "petamorikei/tap/withsecure-elements-agent"
+  cask "microsoft-office"
+  cask "microsoft-teams"
 end
 
 # Entries for machines without the `work` env.
