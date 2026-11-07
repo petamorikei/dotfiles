@@ -40,7 +40,11 @@ fi
 # the display sleeps; on battery they wait an hour, without Low Power Mode.
 # pmset needs sudo, so it runs only when a listed value differs, and only for
 # the power sources `pmset -g custom` lists (desktops have no battery).
+# Dock is restarted at once: until it rereads its preferences it keeps the old
+# app layout, and writes it back over dock.apps the next time an app launches.
 post-defaults = '''
+killall Dock || true
+
 pmset_source() {
   section=$1 flag=$2
   shift 2
