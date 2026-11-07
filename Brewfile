@@ -150,6 +150,7 @@ end
 # VOICEPEAK's license covers only the main machine; the others speak with
 # VOICEVOX (config.desktop.toml).
 if ENV["HOMEBREW_BREWFILE_MAIN"] == "1"
+  cask "altserver"
   cask "voicepeak"
 end
 
