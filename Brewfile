@@ -147,8 +147,6 @@ if ENV["HOMEBREW_BREWFILE_MAS"] == "1"
 end
 
 # The hook sets HOMEBREW_BREWFILE_MAIN=1 only when the `main` env is selected.
-# VOICEPEAK's license covers only the main machine; the others speak with
-# VOICEVOX (config.desktop.toml).
 if ENV["HOMEBREW_BREWFILE_MAIN"] == "1"
   cask "altserver"
   cask "voicepeak"
