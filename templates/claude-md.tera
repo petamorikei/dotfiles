@@ -23,3 +23,15 @@
   - If Codex finds no issues: proceed to ExitPlanMode.
   - If Codex fails to execute: inform the user and ask for guidance.
   - Codex responses may take a long time depending on the query. When the next step depends on Codex's answer, always wait for the complete response before proceeding (never move forward with an incomplete response).
+
+- In Japanese text, never insert a space between Japanese characters (kana, kanji, full-width punctuation) and half-width alphanumerics (JTF Style Guide §2.3.1.1).
+  - Applies to everything you write: chat responses, documents, code comments, commit messages, PR descriptions, and prompts for subagents.
+  - ○ `JTF標準` `Claude Codeを使う` `10MBのファイル` `` `rg`コマンド `` `[設定]を開く`
+  - ✕ `JTF 標準` `Claude Code を使う` `10 MB のファイル` `` `rg` コマンド `` `[ 設定 ] を開く`
+  - Keep spaces inside Western phrases (`Visual Studio Code`) and Markdown syntax spaces (`## 見出し`, `- 項目`, `1. 項目`).
+  - Never "fix" this by converting to full-width alphanumerics (`ＪＴＦ`).
+  - Leave code, code span contents, file paths, and English-only text untouched.
+  - Apply this only to text you newly write. Never change spacing in existing text, even in lines you edit.
+  - Markdown pitfalls when spaces are removed:
+    - Wrap a bare URL followed by Japanese in `<...>` or `[text](url)`; otherwise the autolink swallows the following characters.
+    - Bold that ends with punctuation does not render before Japanese (`**「重要」**です`). Write `「**重要**」です` instead.
