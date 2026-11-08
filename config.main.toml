@@ -1,0 +1,7 @@
+# env: main (the main machine). Claude Code reports by voice with VOICEPEAK
+# (vpsay) here instead of VOICEVOX; the Brewfile's main block installs
+# VOICEPEAK itself.
+
+# The skill that tells Claude Code how to speak through vpsay.
+[bootstrap.repos]
+"~/.claude/skills/vp-reporter" = { url = "https://github.com/petamorikei/vp-reporter.git", ref = "main" }
