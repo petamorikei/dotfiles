@@ -74,6 +74,7 @@ os = "linux"
 "apt:xrdp" = "latest"
 
 # Manjaro
+"pacman:ttf-meslo-nerd" = "latest"
 "aur:discord" = "latest"
 "aur:ghostty" = "latest"
 "aur:google-chrome" = "latest"

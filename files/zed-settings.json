@@ -122,7 +122,7 @@
   "buffer_line_height": {
     "custom": 1.5,
   },
-  "buffer_font_family": "MesloLGS NF",
+  "buffer_font_family": "MesloLGS Nerd Font",
   "telemetry": {
     "diagnostics": false,
     "metrics": false,

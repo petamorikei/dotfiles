@@ -89,6 +89,8 @@ cask "discord"
 cask "discord@canary"
 cask "dropbox"
 cask "firefox"
+# The font of Ghostty and Zed, with the icons powerlevel10k, lsd, and yazi draw.
+cask "font-meslo-lg-nerd-font"
 cask "fuwari"
 cask "ghostty"
 cask "google-chrome"
