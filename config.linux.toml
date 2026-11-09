@@ -6,13 +6,12 @@
 delta = "latest"
 harper-ls = "latest"
 watchexec = "latest"
+# Unverified: Bitwarden no longer publishes checksums for its CLI releases.
+"aqua:bitwarden/clients" = "latest"
 "cargo:erdtree" = "latest"
 "cargo:hwatch" = "latest"
 "cargo:https://github.com/itsjunetime/tdf" = { version = "latest", os = ["linux/x64"] }
 "cargo:procs" = "latest"
-# npm, not pnpm: pnpm's layout breaks bw's bundled require('buffer/').
-# https://github.com/bitwarden/clients/issues/20547
-"npm:@bitwarden/cli" = "latest"
 # Below mise's default weekly-download threshold for npm packages.
 "npm:vidls" = { version = "latest", allow_low_downloads = true }
 
