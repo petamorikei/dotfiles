@@ -163,8 +163,10 @@ if ENV["HOMEBREW_BREWFILE_WORK"] == "1"
   cask "microsoft-teams"
 end
 
-# Entries for machines without the `work` env.
-if ENV["HOMEBREW_BREWFILE_WORK"] != "1"
+# Entries for machines without the `work` env. The hook sets
+# HOMEBREW_BREWFILE_PERSONAL=1 only with the `secrets` env and without `work`,
+# so the first apply on a new machine, which has neither yet, skips them.
+if ENV["HOMEBREW_BREWFILE_PERSONAL"] == "1"
   cask "crossover"
   cask "ogdesign-eagle"
   cask "parallels@20"

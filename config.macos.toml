@@ -22,11 +22,15 @@ url = "https://www.rarlab.com/rar/rarmacos-{{ arch(arm64=\"arm\") }}-723.tar.gz"
 
 [bootstrap.hooks]
 # Real Homebrew installs the Brewfile; mas entries only on physical machines,
-# main and work entries only with the `main` and `work` envs.
+# main and work entries only with the `main` and `work` envs. Personal entries
+# need `secrets` as well as no `work`: kickstart adds `work` only with
+# `secrets`, so without `secrets` (stage 1) whether the machine is a work
+# machine is not known yet.
 post-packages = '''
 HOMEBREW_BREWFILE_MAS={% if mise_env is defined and "physical" in mise_env %}1{% else %}0{% endif %} \
 HOMEBREW_BREWFILE_MAIN={% if mise_env is defined and "main" in mise_env %}1{% else %}0{% endif %} \
 HOMEBREW_BREWFILE_WORK={% if mise_env is defined and "work" in mise_env %}1{% else %}0{% endif %} \
+HOMEBREW_BREWFILE_PERSONAL={% if mise_env is defined and "secrets" in mise_env and "work" not in mise_env %}1{% else %}0{% endif %} \
 brew bundle --no-upgrade --file "{{ xdg_config_home }}/mise/Brewfile"
 {% if mise_env is defined and "work" in mise_env -%}
 # WithSecure installs without a key. Activate it once: the agent keeps its
