@@ -155,7 +155,7 @@ if ENV["HOMEBREW_BREWFILE_MAIN"] == "1"
 end
 
 # The hook sets HOMEBREW_BREWFILE_WORK=1 only when the `work` env is selected,
-# and activates WithSecure with the subscription key afterwards.
+# and activates WithSecure afterwards when the subscription key is available.
 if ENV["HOMEBREW_BREWFILE_WORK"] == "1"
   tap "petamorikei/tap", trusted: { casks: ["withsecure-elements-agent"] }
   cask "petamorikei/tap/withsecure-elements-agent"
