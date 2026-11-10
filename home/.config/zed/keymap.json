@@ -22,6 +22,24 @@
     }
   },
   {
+    // The terminal panel handles workspace::ActivatePane itself and switches
+    // between its own splits. To move to a center pane as VS Code does, focus
+    // the center pane first (f20) and then resend cmd-N from there.
+    "context": "Terminal",
+    "bindings": {
+      "f20": "workspace::FocusCenterPane",
+      "cmd-1": ["workspace::SendKeystrokes", "f20 cmd-1"],
+      "cmd-2": ["workspace::SendKeystrokes", "f20 cmd-2"],
+      "cmd-3": ["workspace::SendKeystrokes", "f20 cmd-3"],
+      "cmd-4": ["workspace::SendKeystrokes", "f20 cmd-4"],
+      "cmd-5": ["workspace::SendKeystrokes", "f20 cmd-5"],
+      "cmd-6": ["workspace::SendKeystrokes", "f20 cmd-6"],
+      "cmd-7": ["workspace::SendKeystrokes", "f20 cmd-7"],
+      "cmd-8": ["workspace::SendKeystrokes", "f20 cmd-8"],
+      "cmd-9": ["workspace::SendKeystrokes", "f20 cmd-9"]
+    }
+  },
+  {
     "context": "Editor && vim_mode == insert",
     "bindings": {
       // "j k": "vim::NormalBefore"
