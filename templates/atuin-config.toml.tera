@@ -231,3 +231,10 @@ autostart = true
 
 ## The port that should be used for TCP on non unix systems
 # tcp_port = 8889
+
+[threads]
+# Copies coding-agent threads into the synced record store. Only where atuin
+# syncs (`secrets`), and never on work machines: their code and command output
+# must not leave for atuin's server. Stage 1 of a new work machine has no
+# `work` env yet, but no `secrets` either.
+capture = {% if mise_env is defined and "secrets" in mise_env and "work" not in mise_env %}true{% else %}false{% endif %}

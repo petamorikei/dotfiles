@@ -33,6 +33,12 @@ cargo-binstall = "latest"
 "~/.zshrc" = { source = "templates/zshrc.tera", mode = "template" }
 "~/.claude/settings.json" = { source = "templates/claude-settings.json.tera", mode = "template" }
 "~/.claude/CLAUDE.md" = { source = "templates/claude-md.tera", mode = "template" }
+# Thread capture differs on work machines. `atuin setup` and `atuin config set`
+# edit the rendered file, which the next apply overwrites: move such edits into
+# the template. ~/.atuin/config.toml, not ~/.config/atuin: atuin creates the
+# former with its defaults whenever it finds no config, and then reads only
+# that one, which the next apply overwrites here.
+"~/.atuin/config.toml" = { source = "templates/atuin-config.toml.tera", mode = "template" }
 # Zed rewrites its settings file, which would replace a symlink.
 "~/.config/zed/settings.json" = { source = "files/zed-settings.json", mode = "copy", permissions = "0600" }
 
