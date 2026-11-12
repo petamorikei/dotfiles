@@ -192,3 +192,56 @@ domain = "com.apple.symbolichotkeys"
 key = "AppleSymbolicHotKeys"
 path = ["52", "enabled"]
 value = false
+
+# ── App settings ────────────────────────────────────────────
+# Enforced on every bootstrap like the system settings above: change them
+# here, not in the apps. Only settings are listed; per-install IDs, licenses,
+# window state, and update bookkeeping stay out.
+
+# AltTab stores its settings as strings, numbers and booleans alike. Its
+# shortcuts are archived data and are not managed here.
+[bootstrap.macos.defaults."com.lwouis.alt-tab-macos"]
+appearanceSize = "1"
+appearanceTheme = "1"
+appsToShow2 = "0"
+hideSpaceNumberLabels = "true"
+previewFocusedWindow = "false"
+screensToShow = "1"
+showHiddenWindows = "1"
+showHiddenWindows2 = "1"
+showMinimizedWindows = "2"
+showMinimizedWindows2 = "2"
+showOnScreen = "1"
+showWindowlessApps = "1"
+showWindowlessApps2 = "1"
+titleTruncation = "2"
+updatePolicy = "1"
+
+# Browserino keeps each setting as a JSON string. Every app in `browsers` comes
+# from the common casks; an entry for a missing app would take a slot in the
+# picker. Apps that are not browsers stay hidden, and so does Parallels Desktop
+# (personal machines), which Rescan adds. `shortcuts` is keyed by bundle ID.
+[bootstrap.macos.defaults."xyz.alexstrnik.Browserino"]
+browsers = '["file:///Applications/Google%20Chrome.app/","file:///Applications/Google%20Chrome%20Beta.app/","file:///Applications/Google%20Chrome%20Dev.app/","file:///Applications/Google%20Chrome%20Canary.app/","file:///System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/","file:///Applications/Firefox.app/","file:///Applications/Microsoft%20Edge.app/","file:///Applications/iTerm.app/","file:///Applications/BetterTouchTool.app/","file:///Applications/ChatGPT.app/"]'
+hiddenBrowsers = '["file:///Applications/iTerm.app/","file:///Applications/BetterTouchTool.app/","file:///Applications/ChatGPT.app/","file:///Applications/Parallels%20Desktop.app/"]'
+shortcuts = '{"com.google.Chrome.beta":"B","com.google.Chrome.dev":"D","com.google.Chrome.canary":"C","com.apple.Safari":"S","org.mozilla.firefox":"F","com.microsoft.edgemac":"E"}'
+directories = '[{"directoryPath":"/Applications"}]'
+
+# Themeable comes from kickstart, which installs it once Typora has created its
+# themes directory; it follows the system appearance by itself. HTML export
+# inlines images with typora-img-to-base64 (cargo tool above).
+[bootstrap.macos.defaults."abnerworks.Typora"]
+theme = "Themeable"
+useSeparateDarkTheme = false
+apply_image_move_for_web = true
+autoEscapeImageURL = true
+copy_markdown_by_default = true
+enable_inline_math = false
+image_save_location = "per-file-assert"
+preLinebreakOnExport = true
+relativePathWithDot = true
+send_usage_info = true
+strict_mode = true
+use_relative_path_for_img = true
+use_seamless_window = true
+"export.html" = { runCommand = true, runCommandStr = "zsh -c 'typora-img-to-base64 \"${currentPath}\" \"${outputPath}\"'" }
