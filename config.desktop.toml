@@ -11,19 +11,29 @@
 [dotfiles]
 "~/.config/vvsay/config.toml" = { source = "home-desktop/.config/vvsay/config.toml", mode = "symlink" }
 
-# The skill that tells Claude Code how to speak through vvsay.
-[bootstrap.repos]
-"~/.claude/skills/vv-reporter" = { url = "https://github.com/petamorikei/vv-reporter.git", ref = "main" }
-
-# VOICEVOX CORE assets (ONNX Runtime, dictionary, voice models; about 1.6 GB).
-# --accept-terms accepts the terms of use of the ONNX Runtime and the voice
-# models, which the owner of these machines has read and accepted.
 [bootstrap.hooks.post-tools]
-run = '''
-if [ ! -d "$HOME/.local/share/vvsay/models" ]; then
-  mise exec -- vvsay --setup --accept-terms </dev/null
-fi
-'''
+run = [
+  # VOICEVOX CORE assets (ONNX Runtime, dictionary, voice models; about
+  # 1.6 GB). --accept-terms accepts the terms of use of the ONNX Runtime and
+  # the voice models, which the owner of these machines has read and accepted.
+  '''
+  if [ ! -d "$HOME/.local/share/vvsay/models" ]; then
+    mise exec -- vvsay --setup --accept-terms </dev/null
+  fi
+  ''',
+  # The skill that tells Claude Code how to speak through vvsay. gh skill
+  # installs it (skills/vv-reporter/ of the repository) and
+  # `gh skill update --all` updates it. A copy without gh skill's metadata
+  # (the git checkout [bootstrap.repos] used to make, or one copied by hand)
+  # is replaced.
+  '''
+  dir="$HOME/.claude/skills/vv-reporter"
+  if ! grep -qs 'github-repo: https://github.com/petamorikei/vv-reporter$' "$dir/SKILL.md"; then
+    rm -rf "$dir"
+    mise exec -- gh skill install petamorikei/vv-reporter vv-reporter --agent claude-code --scope user
+  fi
+  ''',
+]
 
 [bootstrap.apt.sources.vscode]
 uris = "https://packages.microsoft.com/repos/code"

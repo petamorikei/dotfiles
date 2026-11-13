@@ -2,6 +2,16 @@
 # (vpsay) here instead of VOICEVOX; the Brewfile's main block installs
 # VOICEPEAK itself.
 
-# The skill that tells Claude Code how to speak through vpsay.
-[bootstrap.repos]
-"~/.claude/skills/vp-reporter" = { url = "https://github.com/petamorikei/vp-reporter.git", ref = "main" }
+# The skill that tells Claude Code how to speak through vpsay. gh skill
+# installs it (skills/vp-reporter/ of the repository) and
+# `gh skill update --all` updates it. A copy without gh skill's metadata (the
+# git checkout [bootstrap.repos] used to make, or one copied by hand) is
+# replaced.
+[bootstrap.hooks.post-tools]
+run = '''
+dir="$HOME/.claude/skills/vp-reporter"
+if ! grep -qs 'github-repo: https://github.com/petamorikei/vp-reporter$' "$dir/SKILL.md"; then
+  rm -rf "$dir"
+  mise exec -- gh skill install petamorikei/vp-reporter vp-reporter --agent claude-code --scope user
+fi
+'''

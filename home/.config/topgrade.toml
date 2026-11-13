@@ -109,6 +109,8 @@ disable = ["chezmoi"]
 
 # Custom commands
 [commands]
+# Agent skills installed with gh skill (vp-reporter, vv-reporter).
+"gh skills" = "gh skill update --all"
 # "Python Environment" = "~/dev/.env/bin/pip install -i https://pypi.python.org/simple -U --upgrade-strategy eager jupyter"
 # "Custom command using interactive shell (unix)" = "-i vim_upgrade"
 
