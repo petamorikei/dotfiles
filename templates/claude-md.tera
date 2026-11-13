@@ -10,6 +10,8 @@
   - `find` → `fd`
   - `grep` → `rg`
 
+{# Codex is installed on work machines but cannot be used there. -#}
+{% if mise_env is not defined or "work" not in mise_env -%}
 - After creating a plan in Plan Mode, you must have the plan reviewed via `codex exec` before calling ExitPlanMode.
   - Initial review (record the session id from the output):
     ```
@@ -24,6 +26,7 @@
   - If Codex fails to execute: inform the user and ask for guidance.
   - Codex responses may take a long time depending on the query. When the next step depends on Codex's answer, always wait for the complete response before proceeding (never move forward with an incomplete response).
 
+{% endif -%}
 - In Japanese text, never insert a space between Japanese characters (kana, kanji, full-width punctuation) and half-width alphanumerics (JTF Style Guide §2.3.1.1).
   - Applies to everything you write: chat responses, documents, code comments, commit messages, PR descriptions, and prompts for subagents.
   - ○ `JTF標準` `Claude Codeを使う` `10MBのファイル` `` `rg`コマンド `` `[設定]を開く`
