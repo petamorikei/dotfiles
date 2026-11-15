@@ -98,6 +98,17 @@ run = [
   rm -rf "$HOME/.claude/skills/playwright-cli"
   mise exec -- playwright-cli install --skills --global
   ''',
+  # Linear's MCP server, which ~/.claude/linear-workflow.md works through.
+  # Claude Code keeps it in ~/.claude.json, its own state file, so it is
+  # registered here rather than as a dotfile. This only registers it: sign in
+  # once per machine from `/mcp` (`claude mcp login linear-server` over SSH).
+  # Claude Code is installed outside this repository, so machines without it
+  # are skipped.
+  '''
+  if command -v claude >/dev/null && ! claude mcp get linear-server >/dev/null 2>&1; then
+    claude mcp add --transport http --scope user linear-server https://mcp.linear.app/mcp
+  fi
+  ''',
 ]
 
 # Day-to-day apply: `mise run apply` from any directory.
