@@ -47,11 +47,21 @@ Envs name facts about the machine:
 | `physical` | Not a virtual machine (Mac App Store apps) |
 | `host` | Not a container (services, Docker, Samba) |
 | `secrets` | Bitwarden is available (secret templates) |
-| `work` | Work git config, WithSecure on macOS (requires `secrets`) |
+| `work` | Work git config, WithSecure on macOS, gh account for the work directory (requires `secrets`) |
 | `ubuntu` | Ubuntu (tools its apt ships too old) |
 
 Packages keep their existing source: Homebrew on macOS, apt/pacman/AUR on
 Linux, mise for tools Ubuntu's apt ships too old, cargo for Rust tools.
+
+## gh accounts per directory
+
+`gh auth switch` is global, so gh picks its account by directory instead:
+`~/Workspace/mise.toml` sets `GH_TOKEN` to the personal account's token, and
+on work machines the work directory's `mise.toml` (from `GH_WORK_DIR` and
+`GH_WORK_USER` in Bitwarden) sets the work account's. Interactive shells get
+it from mise's prompt hook; Claude Code's shell does not run that hook, so
+`~/.claude/hooks/gh-account-guard.sh` stops its gh commands that would use
+another account and has them rerun as `mise exec -- gh ...`.
 
 ## Never commit in plain text
 

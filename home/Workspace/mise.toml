@@ -1,0 +1,7 @@
+# ~/Workspace: personal repositories. gh uses the personal account here, in
+# every shell that runs mise's prompt hook, whatever `gh auth switch` last
+# chose. Claude Code's shell does not run that hook; its gh-account-guard hook
+# reads this file through `mise env` instead. Empty when the account is not
+# logged in to gh, and gh then falls back to the active account.
+[env]
+GH_TOKEN = "{{ exec(command='gh auth token --user petamorikei 2>/dev/null || true') }}"

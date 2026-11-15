@@ -3,3 +3,27 @@
 
 [dotfiles]
 "~/.gitconfig.work" = { source = "templates/gitconfig.work.tera", mode = "template", permissions = "0600" }
+
+# gh uses the work account in the work directory, as ~/Workspace/mise.toml does
+# for the personal one. Written by a hook rather than a dotfile entry: the
+# directory and the account name come from Bitwarden (GH_WORK_DIR, relative to
+# ~, and GH_WORK_USER), and a dotfile target cannot. The braces of exec() are
+# assembled at run time so this hook's own template rendering leaves them be.
+[bootstrap.hooks.pre-dotfiles]
+run = ['''
+if [ -z "${GH_WORK_DIR:-}" ] || [ -z "${GH_WORK_USER:-}" ]; then
+  echo "gh account for the work directory is not set: add GH_WORK_DIR and GH_WORK_USER to Bitwarden and run mise run apply" >&2
+  exit 0
+fi
+dir="$HOME/$GH_WORK_DIR"
+lb='{'
+rb='}'
+mkdir -p "$dir"
+cat > "$dir/mise.toml" <<EOF
+# Written by the dotfiles (config.work.toml) on every apply: change the
+# account in Bitwarden (GH_WORK_USER), not here.
+[env]
+GH_TOKEN = "${lb}${lb} exec(command='gh auth token --user $GH_WORK_USER 2>/dev/null || true') ${rb}${rb}"
+EOF
+mise trust -q "$dir/mise.toml"
+''']

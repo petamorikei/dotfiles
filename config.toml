@@ -41,6 +41,13 @@ cargo-binstall = "latest"
 "~/.atuin/config.toml" = { source = "templates/atuin-config.toml.tera", mode = "template" }
 # Zed rewrites its settings file, which would replace a symlink.
 "~/.config/zed/settings.json" = { source = "files/zed-settings.json", mode = "copy", permissions = "0600" }
+# gh uses the personal account under ~/Workspace (GH_TOKEN, see the file). The
+# post-dotfiles hook trusts the link. Work machines add their work directory's
+# file in config.work.toml.
+"~/Workspace/mise.toml" = { source = "home/Workspace/mise.toml", mode = "symlink" }
+# Stops Claude Code's gh commands that would run as a different account than
+# the directory's mise config names (Claude Code's shell skips mise's hook).
+"~/.claude/hooks/gh-account-guard.sh" = { source = "home/.claude/hooks/gh-account-guard.sh", mode = "symlink" }
 
 [bootstrap.user]
 # /bin/zsh is the default on macOS and exists on Ubuntu and Manjaro too.
@@ -48,16 +55,24 @@ login_shell = "/bin/zsh"
 
 # Values come from the environment; `mise run apply` fills them from Bitwarden
 # through fnox.toml. Only templates in config.secrets.toml and config.work.toml
-# use them, except withsecure_subscription_key: the post-packages hook in
-# config.macos.toml reads its variable directly.
+# use them, except these, whose variables hooks read directly:
+# withsecure_subscription_key (post-packages in config.macos.toml) and
+# gh_work_dir and gh_work_user (pre-dotfiles in config.work.toml).
 [bootstrap.secrets]
 discord_webhook_url = "DISCORD_WEBHOOK_URL"
+gh_work_dir = "GH_WORK_DIR"
+gh_work_user = "GH_WORK_USER"
 git_email = "GIT_EMAIL"
 git_name = "GIT_NAME"
 git_work_config = "GIT_WORK_CONFIG"
 git_work_user = "GIT_WORK_USER"
 ssh_config = "SSH_CONFIG"
 withsecure_subscription_key = "WITHSECURE_SUBSCRIPTION_KEY"
+
+# ~/Workspace/mise.toml sets GH_TOKEN with exec(), which mise runs only for
+# trusted files.
+[bootstrap.hooks.post-dotfiles]
+run = ['mise trust -q "$HOME/Workspace/mise.toml"']
 
 [bootstrap.hooks.post-tools]
 run = [

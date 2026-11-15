@@ -11,6 +11,14 @@ GIT_NAME = { provider = "bitwarden", value = "dotfiles-secrets/GIT_NAME" }
 GIT_WORK_CONFIG = { provider = "bitwarden", value = "git-work-config/notes" }
 GIT_WORK_USER = { provider = "bitwarden", value = "git-work-user/notes" }
 SSH_CONFIG = { provider = "bitwarden", value = "ssh-config/notes" }
-# Only work machines need it; without it the post-packages hook installs
-# WithSecure but leaves it inactive.
-WITHSECURE_SUBSCRIPTION_KEY = { provider = "bitwarden", value = "dotfiles-secrets/WITHSECURE_SUBSCRIPTION_KEY", if_missing = "warn" }
+
+# Work values live in the work organization's dotfiles-work item, apart from
+# the personal vault. Only work machines need them, so a missing one only
+# warns:
+# - GH_WORK_DIR, GH_WORK_USER: without them the work directory gets no
+#   mise.toml and gh there uses whichever account is active.
+# - WITHSECURE_SUBSCRIPTION_KEY: without it the post-packages hook installs
+#   WithSecure but leaves it inactive.
+GH_WORK_DIR = { provider = "bitwarden", value = "dotfiles-work/GH_WORK_DIR", if_missing = "warn" }
+GH_WORK_USER = { provider = "bitwarden", value = "dotfiles-work/GH_WORK_USER", if_missing = "warn" }
+WITHSECURE_SUBSCRIPTION_KEY = { provider = "bitwarden", value = "dotfiles-work/WITHSECURE_SUBSCRIPTION_KEY", if_missing = "warn" }

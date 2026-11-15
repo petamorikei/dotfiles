@@ -56,6 +56,11 @@
           {
             "type": "command",
             "command": "{{ env.HOME }}/.atuin/bin/atuin hook claude-code"
+          },
+          {
+            "type": "command",
+            "command": "{{ env.HOME }}/.claude/hooks/gh-account-guard.sh",
+            "timeout": 10
           }
         ]
       }
