@@ -48,6 +48,9 @@ cargo-binstall = "latest"
 # Stops Claude Code's gh commands that would run as a different account than
 # the directory's mise config names (Claude Code's shell skips mise's hook).
 "~/.claude/hooks/gh-account-guard.sh" = { source = "home/.claude/hooks/gh-account-guard.sh", mode = "symlink" }
+# Linear workflow rules; a repository opts in by importing it from its
+# CLAUDE.md (`@~/.claude/linear-workflow.md`).
+"~/.claude/linear-workflow.md" = { source = "home/.claude/linear-workflow.md", mode = "symlink" }
 
 [bootstrap.user]
 # /bin/zsh is the default on macOS and exists on Ubuntu and Manjaro too.
