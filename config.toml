@@ -90,6 +90,14 @@ run = [
     mise exec -- bat cache --build
   fi
   ''',
+  # The playwright-cli skill ships inside the package (Brewfile, AUR, or npm
+  # on Ubuntu). Copy the installed version's skill into ~/.claude/skills on
+  # every apply so it follows upgrades; removing it first drops files a newer
+  # version no longer has. `--global` installs no browser.
+  '''
+  rm -rf "$HOME/.claude/skills/playwright-cli"
+  mise exec -- playwright-cli install --skills --global
+  ''',
 ]
 
 # Day-to-day apply: `mise run apply` from any directory.

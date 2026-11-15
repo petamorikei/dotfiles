@@ -43,6 +43,8 @@ brew "onefetch"
 brew "openai/tools/tart"
 brew "pandoc"
 brew "peco"
+# Its skill is copied into ~/.claude/skills by the post-tools hook in config.toml.
+brew "playwright-cli"
 brew "poppler"
 brew "procs"
 brew "pueue"

@@ -28,6 +28,8 @@ yt-dlp = "latest"
 "cargo:topgrade" = "latest"
 "cargo:treemd" = "latest"
 "cargo:viu" = "latest"
+# Not packaged for Ubuntu at all.
+"npm:@playwright/cli" = "latest"
 
 [bootstrap.packages]
 "snap:ghostty" = { classic = true, env = "desktop" }
