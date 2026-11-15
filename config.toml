@@ -76,7 +76,13 @@ run = [
 
 # Day-to-day apply: `mise run apply` from any directory.
 [tasks.apply]
-description = "Apply this config with secrets from Bitwarden (needs BW_SESSION)"
+description = "Pull this repository, then apply it with secrets from Bitwarden (needs BW_SESSION)"
 # fnox looks for fnox.toml from the working directory upward.
 dir = "{{ xdg_config_home }}/mise"
-run = "fnox exec -- mise bootstrap"
+# Pull here rather than with `mise bootstrap --update`: fnox then reads the
+# pulled fnox.toml, and pacman skips the `pacman -Sy` that `--update` runs
+# before installing, which would make a partial upgrade.
+run = [
+  "git pull --ff-only",
+  "fnox exec -- mise bootstrap",
+]

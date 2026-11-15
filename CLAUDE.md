@@ -31,7 +31,7 @@ See README.md for the file layout and the env list.
 ## Common Commands
 
 ```bash
-mise run apply                 # apply with secrets (needs BW_SESSION)
+mise run apply                 # git pull --ff-only, then apply with secrets (needs BW_SESSION)
 mise bootstrap --dry-run       # preview (renders no dotfile templates)
 mise bootstrap status          # state of every part
 mise dot status                # dotfile state

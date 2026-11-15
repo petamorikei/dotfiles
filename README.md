@@ -12,8 +12,13 @@ steps mise cannot do (logins, drivers, reboot).
 
 ```bash
 export BW_SESSION=$(bw unlock --raw)
-mise run apply        # fnox exec -- mise bootstrap, from any directory
+mise run apply        # git pull --ff-only, then fnox exec -- mise bootstrap, from any directory
 ```
+
+`mise run apply` pulls this repository first, so changes pushed from other
+machines are applied too (plain `mise bootstrap` does not pull). When this
+checkout has diverged from upstream, the pull stops the task: merge or rebase
+by hand, then run it again. Pushing stays manual.
 
 On machines with the `secrets` env, use `mise run apply`: plain
 `mise bootstrap` stops because the secret templates have no values.
