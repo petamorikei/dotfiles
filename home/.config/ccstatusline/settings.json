@@ -31,7 +31,12 @@
         "type": "session-usage",
         "backgroundColor": "bgBrightBlack",
         "metadata": {
-          "display": "progress-short"
+          "display": "progress-short",
+          "invert": "false",
+          "cursor": "true"
+        },
+        "numberFormat": {
+          "style": "compact"
         }
       },
       {
@@ -40,8 +45,9 @@
         "backgroundColor": "bgWhite",
         "metadata": {
           "display": "time",
-          "compact": "false"
-        }
+          "label": "Reset: "
+        },
+        "rawValue": false
       },
       {
         "id": "4f0792cb-6ada-4055-82cc-218a12502d1d",
@@ -49,15 +55,32 @@
         "backgroundColor": "bgCyan",
         "metadata": {
           "inverse": "false"
-        }
-      },
-      {
-        "id": "17f8b360-93cb-4468-acb4-3c669ebcded7",
-        "type": "session-cost",
-        "backgroundColor": "bgBrightRed"
+        },
+        "rawValue": false
       }
     ],
     [
+      {
+        "id": "1689f14e-2b23-40f2-93cb-92d8b3a7945a",
+        "backgroundColor": "bgBrightRed",
+        "type": "weekly-usage",
+        "metadata": {
+          "display": "progress-short",
+          "label": "7d: ",
+          "cursor": "true"
+        },
+        "numberFormat": {
+          "style": "compact"
+        }
+      },
+      {
+        "id": "3e6f591f-387a-4a47-b649-aefa77eb05ad",
+        "backgroundColor": "bgBrightBlack",
+        "type": "weekly-reset-timer",
+        "metadata": {
+          "label": "Reset: "
+        }
+      },
       {
         "id": "d11d4613-7839-4c49-bede-af17cc6ad804",
         "type": "current-working-dir",
@@ -65,13 +88,14 @@
       }
     ]
   ],
-  "flexMode": "full-minus-40",
-  "compactThreshold": 60,
   "colorLevel": 3,
   "defaultPadding": " ",
+  "defaultPaddingSide": "both",
   "inheritSeparatorColors": false,
   "globalBold": false,
   "gitCacheTtlSeconds": 5,
+  "terminalWidthCacheTtlSeconds": 5,
+  "customCommandCacheTtlSeconds": 0,
   "minimalistMode": false,
   "powerline": {
     "enabled": true,
