@@ -4,5 +4,12 @@
 # This won't be added again if you remove it.
 Include ~/.orbstack/ssh/config
 
+# orb uses OrbStack's own key: keep it out of the default-key Match block.
+Host orb
+	Tag ownkey
+
+# End the orb block so the options below apply to every host.
+Host *
+
 {% endif -%}
 {{ secret(name="ssh_config") }}
