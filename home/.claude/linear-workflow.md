@@ -41,8 +41,14 @@ it do not use it.
 - Put the issue ID with a magic word in the PR body:
   - `Fixes DEV-123` when the PR completes the issue.
   - `Refs DEV-123` for partial work (the issue stays open).
-- Open the PR as a draft while working; when the implementation is done, mark
-  it ready with `gh pr ready`.
+- Open the PR as a draft right after the first commit, so the issue moves to
+  In Progress as soon as work starts.
+  - Make the first commit a meaningful unit that passes CI on its own (e.g. a
+    skeleton that follows the agreed approach).
+- When the implementation is done, rewrite the PR body to match the final
+  changes, then mark the PR ready with `gh pr ready`.
+- If the work is abandoned, close the PR and ask the user what to do with the
+  issue's status.
 - Target the default branch.
 - The user reviews the PR. Merge only after the user explicitly approves, with
   `gh pr merge --merge --delete-branch`. Never merge without approval.
