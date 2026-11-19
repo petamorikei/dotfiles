@@ -41,7 +41,7 @@ if [ -z "$(ls -A /Library/WithSecure/fsmac/substatus 2>/dev/null)" ]; then
   if [ -n "${WITHSECURE_SUBSCRIPTION_KEY:-}" ]; then
     sudo /Library/WithSecure/bin/activator --subscription-key "$WITHSECURE_SUBSCRIPTION_KEY"
   else
-    echo "WithSecure is not activated: add WITHSECURE_SUBSCRIPTION_KEY to Bitwarden and run mise run apply" >&2
+    echo "WithSecure is not activated: add WITHSECURE_SUBSCRIPTION_KEY to Bitwarden and run dotapply" >&2
   fi
 fi
 {%- endif %}

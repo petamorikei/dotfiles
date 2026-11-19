@@ -155,6 +155,22 @@ function cdp() { cd "$(ls | peco)" }
 # ls with peco
 function lsp() { ls -a | peco }
 
+# Apply the dotfiles (~/.config/mise) from any directory: pull, then
+# `mise bootstrap` with secrets from Bitwarden (needs BW_SESSION). Not a mise
+# task: tasks in ~/.config/mise are global, so one there would show up in every
+# project and run in any project without a task of its own by that name.
+# Pull here rather than with `mise bootstrap --update`: fnox (which looks for
+# fnox.toml from the working directory upward) then reads the pulled
+# fnox.toml, and pacman skips the `pacman -Sy` that `--update` runs before
+# installing, which would make a partial upgrade.
+function dotapply() {
+  (
+    cd "${XDG_CONFIG_HOME:-$HOME/.config}/mise" &&
+      git pull --ff-only &&
+      fnox exec -- mise bootstrap
+  )
+}
+
 # Extend open command
 {%- if os() == "macos" %}
 function op() { if [ -z "$1" ]; then open .; else open "$@"; fi }

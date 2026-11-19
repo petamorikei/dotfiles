@@ -12,7 +12,7 @@
 [bootstrap.hooks.pre-dotfiles]
 run = ['''
 if [ -z "${GH_WORK_DIR:-}" ] || [ -z "${GH_WORK_USER:-}" ]; then
-  echo "gh account for the work directory is not set: add GH_WORK_DIR and GH_WORK_USER to Bitwarden and run mise run apply" >&2
+  echo "gh account for the work directory is not set: add GH_WORK_DIR and GH_WORK_USER to Bitwarden and run dotapply" >&2
   exit 0
 fi
 dir="$HOME/$GH_WORK_DIR"

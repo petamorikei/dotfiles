@@ -12,15 +12,17 @@ steps mise cannot do (logins, drivers, reboot).
 
 ```bash
 export BW_SESSION=$(bw unlock --raw)
-mise run apply        # git pull --ff-only, then fnox exec -- mise bootstrap, from any directory
+dotapply              # git pull --ff-only, then fnox exec -- mise bootstrap, from any directory
 ```
 
-`mise run apply` pulls this repository first, so changes pushed from other
+`dotapply` is a zsh function from `templates/zshrc.tera`, not a mise task:
+tasks in this repository's config are global, so they would show up in every
+project. It pulls this repository first, so changes pushed from other
 machines are applied too (plain `mise bootstrap` does not pull). When this
-checkout has diverged from upstream, the pull stops the task: merge or rebase
-by hand, then run it again. Pushing stays manual.
+checkout has diverged from upstream, the pull stops it: merge or rebase by
+hand, then run it again. Pushing stays manual.
 
-On machines with the `secrets` env, use `mise run apply`: plain
+On machines with the `secrets` env, use `dotapply`: plain
 `mise bootstrap` stops because the secret templates have no values.
 
 Files under `home/` are symlinked into `~`, so edits to them land here
@@ -36,7 +38,7 @@ apply: edit the source here, then apply.
 | `config.macos.toml`, `config.linux.toml` | By platform (`auto_env` in `miserc.toml`) |
 | `config.<env>.toml` | When the env is in `miserc.local.toml` (written by kickstart, not committed) |
 | `Brewfile` | macOS, by the `post-packages` hook (real Homebrew, `brew bundle --no-upgrade`). Casks Homebrew does not ship come from [petamorikei/homebrew-tap](https://github.com/petamorikei/homebrew-tap) |
-| `fnox.toml` | `mise run apply`: Bitwarden item references for `[bootstrap.secrets]` |
+| `fnox.toml` | `dotapply`: Bitwarden item references for `[bootstrap.secrets]` |
 
 Envs name facts about the machine:
 
