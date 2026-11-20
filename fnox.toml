@@ -16,7 +16,7 @@ SSH_CONFIG = { provider = "bitwarden", value = "ssh-config/notes" }
 # the personal vault. Only work machines need them, so a missing one only
 # warns:
 # - GH_WORK_DIR, GH_WORK_USER: without them the work directory gets no
-#   mise.toml and gh there uses whichever account is active.
+#   gh account file and gh there uses whichever account is active.
 # - WITHSECURE_SUBSCRIPTION_KEY: without it the post-packages hook installs
 #   WithSecure but leaves it inactive.
 GH_WORK_DIR = { provider = "bitwarden", value = "dotfiles-work/GH_WORK_DIR", if_missing = "warn" }

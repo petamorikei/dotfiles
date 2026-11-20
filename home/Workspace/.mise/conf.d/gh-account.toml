@@ -3,5 +3,9 @@
 # chose. Claude Code's shell does not run that hook; its gh-account-guard hook
 # reads this file through `mise env` instead. Empty when the account is not
 # logged in to gh, and gh then falls back to the active account.
+#
+# A conf.d fragment rather than ~/Workspace/mise.toml: mise loads it for every
+# directory below, but `mise use` there does not write to it, so a project
+# without its own config gets a new mise.toml instead of a tool added here.
 [env]
 GH_TOKEN = "{{ exec(command='gh auth token --user petamorikei 2>/dev/null || true') }}"

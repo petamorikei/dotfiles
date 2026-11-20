@@ -58,9 +58,12 @@ Linux, mise for tools Ubuntu's apt ships too old, cargo for Rust tools.
 ## gh accounts per directory
 
 `gh auth switch` is global, so gh picks its account by directory instead:
-`~/Workspace/mise.toml` sets `GH_TOKEN` to the personal account's token, and
-on work machines the work directory's `mise.toml` (from `GH_WORK_DIR` and
-`GH_WORK_USER` in Bitwarden) sets the work account's. Interactive shells get
+`~/Workspace/.mise/conf.d/gh-account.toml` sets `GH_TOKEN` to the personal
+account's token, and on work machines the same file in the work directory
+(from `GH_WORK_DIR` and `GH_WORK_USER` in Bitwarden) sets the work account's.
+They are conf.d fragments, not `mise.toml`, so `mise use` in a project below
+writes to the project's own config instead of adding the tool to them.
+Interactive shells get
 it from mise's prompt hook; Claude Code's shell does not run that hook, so
 `~/.claude/hooks/gh-account-guard.sh` stops its gh commands that would use
 another account and has them rerun as `mise exec -- gh ...`.

@@ -44,7 +44,7 @@ cargo-binstall = "latest"
 # gh uses the personal account under ~/Workspace (GH_TOKEN, see the file). The
 # post-dotfiles hook trusts the link. Work machines add their work directory's
 # file in config.work.toml.
-"~/Workspace/mise.toml" = { source = "home/Workspace/mise.toml", mode = "symlink" }
+"~/Workspace/.mise/conf.d/gh-account.toml" = { source = "home/Workspace/.mise/conf.d/gh-account.toml", mode = "symlink" }
 # Stops Claude Code's gh commands that would run as a different account than
 # the directory's mise config names (Claude Code's shell skips mise's hook).
 "~/.claude/hooks/gh-account-guard.sh" = { source = "home/.claude/hooks/gh-account-guard.sh", mode = "symlink" }
@@ -73,10 +73,10 @@ git_work_user = "GIT_WORK_USER"
 ssh_config = "SSH_CONFIG"
 withsecure_subscription_key = "WITHSECURE_SUBSCRIPTION_KEY"
 
-# ~/Workspace/mise.toml sets GH_TOKEN with exec(), which mise runs only for
-# trusted files.
+# ~/Workspace/.mise/conf.d/gh-account.toml sets GH_TOKEN with exec(), which
+# mise runs only for trusted files.
 [bootstrap.hooks.post-dotfiles]
-run = ['mise trust -q "$HOME/Workspace/mise.toml"']
+run = ['mise trust -q "$HOME/Workspace/.mise/conf.d/gh-account.toml"']
 
 [bootstrap.hooks.post-tools]
 run = [

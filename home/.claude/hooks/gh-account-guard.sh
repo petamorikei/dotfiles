@@ -2,8 +2,9 @@
 # Claude Code PreToolUse(Bash) hook: keeps gh on the GitHub account that the
 # directory's mise config names.
 #
-# ~/Workspace/mise.toml (and, on work machines, the work directory's mise.toml)
-# sets GH_TOKEN to an account's token, so interactive shells use that account
+# ~/Workspace/.mise/conf.d/gh-account.toml (and, on work machines, the same
+# file in the work directory) sets GH_TOKEN to an account's token, so
+# interactive shells use that account
 # whatever `gh auth switch` last chose. Claude Code's shell does not run mise's
 # prompt hook, so that GH_TOKEN never reaches it. This hook compares the token
 # the directory names with the active account's token, and when they differ,
