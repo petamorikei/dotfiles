@@ -11,9 +11,13 @@ steps mise cannot do (logins, drivers, reboot).
 ## Day-to-day
 
 ```bash
-export BW_SESSION=$(bw unlock --raw)
-dotapply              # git pull --ff-only, then fnox exec -- mise bootstrap, from any directory
+dotapply              # git pull --ff-only, unlock Bitwarden, then fnox exec -- mise bootstrap, from any directory
 ```
+
+`dotapply` asks for the Bitwarden master password when the vault is locked
+(and runs `bw login` when not logged in). The session lasts only for that
+run; to apply several times without retyping it, run
+`export BW_SESSION=$(bw unlock --raw)` in the shell first.
 
 `dotapply` is a zsh function from `templates/zshrc.tera`, not a mise task:
 tasks in this repository's config are global, so they would show up in every

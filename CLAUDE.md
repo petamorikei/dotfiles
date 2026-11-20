@@ -31,7 +31,7 @@ See README.md for the file layout and the env list.
 ## Common Commands
 
 ```bash
-dotapply                       # zsh function: git pull --ff-only, then apply with secrets (needs BW_SESSION)
+dotapply                       # zsh function: git pull --ff-only, unlock Bitwarden if locked, then apply with secrets
 mise bootstrap --dry-run       # preview (renders no dotfile templates)
 mise bootstrap status          # state of every part
 mise dot status                # dotfile state

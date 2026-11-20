@@ -156,7 +156,10 @@ function cdp() { cd "$(ls | peco)" }
 function lsp() { ls -a | peco }
 
 # Apply the dotfiles (~/.config/mise) from any directory: pull, then
-# `mise bootstrap` with secrets from Bitwarden (needs BW_SESSION). Not a mise
+# `mise bootstrap` with secrets from Bitwarden. fnox needs an unlocked vault
+# (BW_SESSION): when this shell has none, it asks for the master password (or
+# logs in first). The session stays inside the subshell, so the next dotapply
+# asks again unless BW_SESSION is exported in the shell beforehand. Not a mise
 # task: tasks in ~/.config/mise are global, so one there would show up in every
 # project and run in any project without a task of its own by that name.
 # Pull here rather than with `mise bootstrap --update`: fnox (which looks for
@@ -166,8 +169,14 @@ function lsp() { ls -a | peco }
 function dotapply() {
   (
     cd "${XDG_CONFIG_HOME:-$HOME/.config}/mise" &&
-      git pull --ff-only &&
-      fnox exec -- mise bootstrap
+      git pull --ff-only || return
+    case "$(bw status | jq -r .status)" in
+      unlocked) ;;
+      locked) BW_SESSION=$(bw unlock --raw) || return ;;
+      *) BW_SESSION=$(bw login --raw) || return ;;
+    esac
+    export BW_SESSION
+    fnox exec -- mise bootstrap
   )
 }
 
